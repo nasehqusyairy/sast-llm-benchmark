@@ -1,0 +1,17 @@
+# Benchmark dataset
+/benchmark/
+
+# Experiment outputs
+/results/
+/reports/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
