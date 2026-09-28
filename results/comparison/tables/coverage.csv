@@ -1,0 +1,4 @@
+,Records in JSONL,Valid predictions,Missing / invalid,Coverage (%)
+Qwen2.5-3B,2740.0,2740.0,0.0,100.0
+Gemma4-E4B,2740.0,2740.0,0.0,100.0
+Qwen3-8B,2740.0,2740.0,0.0,100.0

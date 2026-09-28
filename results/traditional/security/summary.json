@@ -1,0 +1,39 @@
+{
+  "benchmark": {
+    "ground_truth_tests": 2740,
+    "positive_tests": 1415,
+    "negative_tests": 1325
+  },
+  "tools": {
+    "spotbugs": {
+      "input": "benchmark/BenchmarkJava/results/Benchmark_1.2-spotbugs-v4.10.4-257.xml",
+      "security_detected_tests": 291,
+      "metrics": {
+        "tp": 156,
+        "fp": 135,
+        "fn": 1259,
+        "tn": 1190,
+        "precision": 0.5360824742268041,
+        "recall": 0.11024734982332156,
+        "f1": 0.182883939038687,
+        "accuracy": 0.4912408759124088,
+        "false_positive_rate": 0.1018867924528302
+      }
+    },
+    "findsecbugs": {
+      "input": "benchmark/BenchmarkJava/results/Benchmark_1.2-findsecbugs-v1.14.0-73.xml",
+      "security_detected_tests": 2599,
+      "metrics": {
+        "tp": 1410,
+        "fp": 1189,
+        "fn": 5,
+        "tn": 136,
+        "precision": 0.5425163524432474,
+        "recall": 0.9964664310954063,
+        "f1": 0.70254110612855,
+        "accuracy": 0.5642335766423358,
+        "false_positive_rate": 0.8973584905660378
+      }
+    }
+  }
+}

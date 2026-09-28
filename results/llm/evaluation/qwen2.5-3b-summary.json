@@ -1,0 +1,18 @@
+{
+  "model": "qwen2.5-3b",
+  "benchmark": {
+    "ground_truth_tests": 2740,
+    "llm_predictions": 2740,
+    "missing_predictions": 0
+  },
+  "metrics": {
+    "tp": 1415,
+    "fp": 1325,
+    "fn": 0,
+    "tn": 0,
+    "precision": 0.5164233576642335,
+    "recall": 1.0,
+    "f1": 0.6811070998796631,
+    "accuracy": 0.5164233576642335
+  }
+}

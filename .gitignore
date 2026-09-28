@@ -1,10 +1,6 @@
 # Benchmark dataset
 /benchmark/
 
-# Experiment outputs
-/results/
-/reports/
-
 # Python
 __pycache__/
 *.py[cod]

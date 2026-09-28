@@ -1,0 +1,12 @@
+category,Total,Vulnerable,Safe
+cmdi,251,126,125
+crypto,246,130,116
+hash,236,129,107
+ldapi,59,27,32
+pathtraver,268,133,135
+securecookie,67,36,31
+sqli,504,272,232
+trustbound,126,83,43
+weakrand,493,218,275
+xpathi,35,15,20
+xss,455,246,209

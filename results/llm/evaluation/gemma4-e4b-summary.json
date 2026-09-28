@@ -1,0 +1,18 @@
+{
+  "model": "gemma4-e4b",
+  "benchmark": {
+    "ground_truth_tests": 2740,
+    "llm_predictions": 2740,
+    "missing_predictions": 0
+  },
+  "metrics": {
+    "tp": 1244,
+    "fp": 989,
+    "fn": 171,
+    "tn": 336,
+    "precision": 0.5570980743394537,
+    "recall": 0.8791519434628975,
+    "f1": 0.6820175438596491,
+    "accuracy": 0.5766423357664233
+  }
+}
