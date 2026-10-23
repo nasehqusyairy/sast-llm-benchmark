@@ -3,7 +3,7 @@
 Skrip `scripts/auto_commit.py` memeriksa working tree secara berkala. Jika ada perubahan, skrip akan melakukan `git add --all`, membuat commit, lalu menjalankan `git push origin HEAD` pada branch aktif. Berkas yang di-ignore Git tidak ikut kecuali opsi `--include-ignored` dipakai.
 
 ```bash
-# Cek tiap 5 menit (default)
+# Periksa tiap 5 menit (default)
 python3 scripts/auto_commit.py
 
 # Interval 2 menit
