@@ -1,0 +1,10 @@
+{SYSTEM_INSTRUCTIONS}
+
+Does this code contain the {CWE_NAME} vulnerability?
+
+Code:
+{JAVA_SOURCE_CODE}
+
+No static-analysis findings are provided.
+
+Return JSON with `vulnerable` (boolean), `cwe` (string), `line` (integer or null), and `reason` (brief evidence summary; do not provide hidden chain-of-thought).

@@ -1,0 +1,12 @@
+{SYSTEM_INSTRUCTIONS}
+
+Follow these steps:
+Step 1: Analyze whether the code contains a vulnerability.
+Step 2: Reconsider your decision using only your code analysis; no static-analysis output is provided.
+
+Consider the given code. Are there any {CWE_NAME} vulnerabilities in the following Java file?
+
+Code:
+{JAVA_SOURCE_CODE}
+
+Return JSON with `vulnerable` (boolean), `cwe` (string), `line` (integer or null), and `reason` (brief evidence summary; do not provide hidden chain-of-thought).

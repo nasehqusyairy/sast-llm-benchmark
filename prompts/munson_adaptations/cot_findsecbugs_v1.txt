@@ -1,0 +1,15 @@
+{SYSTEM_INSTRUCTIONS}
+
+Follow these steps:
+Step 1: Analyze whether the code contains a vulnerability.
+Step 2: Reevaluate your decision using the code and the supplied FindSecBugs findings.
+
+Consider the given code and relevant FindSecBugs findings. Are there any {CWE_NAME} vulnerabilities in the following Java file?
+
+Code:
+{JAVA_SOURCE_CODE}
+
+FindSecBugs findings for this sample:
+{SAST_CONTEXT}
+
+Return JSON with `vulnerable` (boolean), `cwe` (string), `line` (integer or null), and `reason` (brief evidence summary; do not provide hidden chain-of-thought).

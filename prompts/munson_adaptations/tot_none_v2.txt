@@ -1,0 +1,16 @@
+{SYSTEM_INSTRUCTIONS}
+
+Imagine three different experts are answering this question. {ADDITIONAL_INSTRUCTIONS}
+
+Follow these steps:
+Step 1: Each expert privately evaluates the code. Do not reveal or share intermediate reasoning. After the private evaluation, record only the final decision and a concise evidence summary.
+Step 2: If any expert is wrong at any point, they leave.
+Step 3: Each remaining expert re-evaluates their decision using their code analysis; no static-analysis output is provided.
+Step 4: Each remaining expert compares their final decisions and selects the best one.
+
+Consider the given code. Are there any {CWE_NAME} vulnerabilities in the following Java file?
+
+Code:
+{JAVA_SOURCE_CODE}
+
+Return JSON with `vulnerable` (boolean), `cwe` (string), `line` (integer or null), and `reason` (brief evidence summary; do not provide hidden chain-of-thought).

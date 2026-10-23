@@ -1,0 +1,9 @@
+{SYSTEM_INSTRUCTIONS}
+
+Does this code contain the {CWE_NAME} vulnerability?
+
+Code Snippet:
+{JAVA_SOURCE_CODE}
+
+SARIF Results:
+{SAST_CONTEXT}

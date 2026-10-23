@@ -1,0 +1,13 @@
+{SYSTEM_INSTRUCTIONS}
+
+Follow these steps:
+Step 1: Does this code contain a vulnerability?
+Step 2: Reevaluate your decision using the static analysis tool.
+
+Consider the given code and relevant SAST results. Are there any {CWE_NAME} vulnerabilities in the following Java file?
+
+Code Snippet:
+{JAVA_SOURCE_CODE}
+
+SAST Results:
+{SAST_CONTEXT}
