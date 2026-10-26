@@ -33,6 +33,11 @@ if ! python3 -c 'import sys; raise SystemExit(sys.version_info < (3, 10))'; then
     exit 1
 fi
 
+if ! command -v git >/dev/null 2>&1; then
+    echo "ERROR: Git diperlukan untuk menyiapkan OWASP Benchmark." >&2
+    exit 1
+fi
+
 if [[ ! -s llm/dataset.jsonl ]]; then
     echo "ERROR: Dataset tidak ditemukan atau kosong: $ROOT_DIR/llm/dataset.jsonl" >&2
     exit 1
@@ -61,54 +66,61 @@ python3 scripts/run_llm_benchmark3.py --help >/dev/null
 echo "Dataset, prompt, dan runner siap."
 echo "Dependensi Python tambahan tidak diperlukan (runner menggunakan standard library)."
 
-if (( WITH_SAST )); then
-    for tool in git mvn java; do
-        if ! command -v "$tool" >/dev/null 2>&1; then
-            echo "ERROR: Perintah '$tool' diperlukan untuk persiapan FindSecBugs." >&2
-            exit 1
-        fi
-    done
+benchmark_dir="benchmark/BenchmarkJava"
+utils_dir="benchmark/BenchmarkUtils"
 
-    benchmark_dir="benchmark/BenchmarkJava"
-    utils_dir="benchmark/BenchmarkUtils"
-
-    if [[ ! -d "$benchmark_dir" ]]; then
-        mkdir -p benchmark
-        git clone --depth 1 \
-            https://github.com/nasehqusyairy/BenchmarkJava.git \
-            "$benchmark_dir"
-    fi
-
-    if [[ ! -s "$benchmark_dir/expectedresults-1.2.csv" ||
-          ! -x "$benchmark_dir/scripts/runFindSecBugs.sh" ]]; then
-        echo "ERROR: $benchmark_dir bukan checkout BenchmarkJava v1.2 yang memiliki scripts/runFindSecBugs.sh." >&2
-        echo "Periksa checkout tersebut; skrip tidak mengubah atau menimpanya." >&2
-        exit 1
-    fi
-
-    if [[ ! -d "$utils_dir" ]]; then
-        git clone --depth 1 \
-            https://github.com/OWASP-Benchmark/BenchmarkUtils.git \
-            "$utils_dir"
-    fi
-
-    if [[ ! -s "$utils_dir/pom.xml" ]]; then
-        echo "ERROR: pom.xml tidak ditemukan di $utils_dir." >&2
-        exit 1
-    fi
-
-    echo "Menginstal OWASP BenchmarkUtils ke Maven lokal..."
-    mvn -f "$utils_dir/pom.xml" install
-
-    echo "Menjalankan FindSecBugs (dapat memerlukan waktu beberapa menit)..."
-    bash "$benchmark_dir/scripts/runFindSecBugs.sh"
-
-    if ! find "$benchmark_dir/results" -type f -name '*.xml' \
-        \( -iname '*findsecbugs*' -o -iname '*findbugs*security*' -o -iname '*spotbugs*' \) \
-        -print -quit 2>/dev/null | grep -q .; then
-        echo "ERROR: Laporan XML FindSecBugs tidak ditemukan di $benchmark_dir/results." >&2
-        exit 1
-    fi
-
-    echo "FindSecBugs siap. Jalankan skenario yang memuat FindSecBugs dengan ./scripts/run.sh."
+if [[ ! -d "$benchmark_dir" ]]; then
+    mkdir -p benchmark
+    echo "Mengunduh OWASP BenchmarkJava ke $benchmark_dir..."
+    git clone --depth 1 \
+        https://github.com/nasehqusyairy/BenchmarkJava.git \
+        "$benchmark_dir"
 fi
+
+if [[ ! -s "$benchmark_dir/expectedresults-1.2.csv" ||
+      ! -x "$benchmark_dir/scripts/runFindSecBugs.sh" ]]; then
+    echo "ERROR: $benchmark_dir tidak memiliki expectedresults-1.2.csv atau scripts/runFindSecBugs.sh." >&2
+    echo "Pastikan folder tersebut berisi checkout BenchmarkJava v1.2 yang benar; skrip tidak mengubah atau menimpanya." >&2
+    exit 1
+fi
+
+echo "OWASP BenchmarkJava siap di $ROOT_DIR/$benchmark_dir."
+
+if (( ! WITH_SAST )); then
+    echo "Untuk menyiapkan plugin dan menjalankan FindSecBugs, gunakan ./scripts/prepare.sh --with-sast."
+    exit 0
+fi
+
+for tool in mvn java; do
+    if ! command -v "$tool" >/dev/null 2>&1; then
+        echo "ERROR: Perintah '$tool' diperlukan untuk persiapan FindSecBugs." >&2
+        exit 1
+    fi
+done
+
+if [[ ! -d "$utils_dir" ]]; then
+    echo "Mengunduh OWASP BenchmarkUtils ke $utils_dir..."
+    git clone --depth 1 \
+        https://github.com/OWASP-Benchmark/BenchmarkUtils.git \
+        "$utils_dir"
+fi
+
+if [[ ! -s "$utils_dir/pom.xml" ]]; then
+    echo "ERROR: pom.xml tidak ditemukan di $utils_dir." >&2
+    exit 1
+fi
+
+echo "Menginstal OWASP BenchmarkUtils ke Maven lokal..."
+mvn -f "$utils_dir/pom.xml" install
+
+echo "Menjalankan FindSecBugs (dapat memerlukan waktu beberapa menit)..."
+bash "$benchmark_dir/scripts/runFindSecBugs.sh"
+
+if ! find "$benchmark_dir/results" -type f -name '*.xml' \
+    \( -iname '*findsecbugs*' -o -iname '*findbugs*security*' -o -iname '*spotbugs*' \) \
+    -print -quit 2>/dev/null | grep -q .; then
+    echo "ERROR: Laporan XML FindSecBugs tidak ditemukan di $benchmark_dir/results." >&2
+    exit 1
+fi
+
+echo "FindSecBugs siap. Jalankan skenario yang memuat FindSecBugs dengan ./scripts/run.sh."

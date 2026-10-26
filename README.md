@@ -23,8 +23,10 @@ Dari root repository:
 ./scripts/prepare.sh
 ```
 
-Skrip memvalidasi versi Python, dataset, prompt, dan runner. Tidak ada perubahan
-atau instalasi sistem yang dilakukan oleh persiapan standar.
+Skrip memvalidasi versi Python, dataset, prompt, dan runner, lalu mengunduh
+checkout OWASP BenchmarkJava ke `benchmark/BenchmarkJava` jika belum ada.
+Checkout ini diperlukan agar runner dapat menjalankan skenario FindSecBugs.
+Persiapan standar belum menginstal plugin Maven atau menjalankan scanner.
 
 Pastikan server Ollama berjalan. Jika belum, jalankan di terminal terpisah:
 
@@ -61,18 +63,18 @@ daya yang signifikan.
 
 ## Menyiapkan FindSecBugs (opsional)
 
-Skenario FindSecBugs menggunakan checkout BenchmarkJava v1.2 yang terpisah dan
-plugin BenchmarkUtils. Opsi berikut mengambil checkout ke folder `benchmark/`
-(folder ini diabaikan Git), menginstal BenchmarkUtils ke Maven lokal, lalu
-menjalankan scanner:
+Skenario FindSecBugs juga memerlukan plugin BenchmarkUtils. Opsi berikut
+mengunduh checkout BenchmarkUtils jika belum ada, menginstalnya ke Maven lokal,
+lalu menjalankan scanner. Perintah ini melengkapi checkout BenchmarkJava yang
+sudah disiapkan oleh `./scripts/prepare.sh`:
 
 ```bash
 ./scripts/prepare.sh --with-sast
 ```
 
 Perlu koneksi internet dan waktu untuk mengunduh dependensi serta menjalankan
-build. Jika `benchmark/BenchmarkJava` sudah ada, skrip memeriksa isinya dan
-tidak menimpanya. Setelah persiapan selesai, skenario `baseline-2`,
+build. Jika folder benchmark yang diperlukan sudah ada, skrip memeriksa isinya
+dan tidak menimpanya. Setelah persiapan selesai, skenario `baseline-2`,
 `zero-shot-findsecbugs`, `cot-findsecbugs`, dan `tot-findsecbugs` dapat
 dijalankan lewat `./scripts/run.sh`.
 
