@@ -3,13 +3,14 @@
 
 Designed to live at scripts/run_llm_benchmark.py in sast-llm-benchmark.
 Reads prompt templates from ../prompts (copied from Experiment-SAST-LLM-Tools)
-when available. Logs every attempt as JSONL under results/llm/raw/.
+when available. Logs every attempt as JSONL under results/llm/raw. Summaries describe model predictions without ground-truth comparison.
 
 Dataset JSONL records must contain: test_name, code. Optional: cwe, category.
 Ground-truth outcome labels are intentionally never inserted into prompts.
 """
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 import os
@@ -18,7 +19,6 @@ import sys
 import time
 import subprocess
 import xml.etree.ElementTree as ET
-import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,6 +32,8 @@ DEFAULT_TIMEOUT = 300
 DEFAULT_LIMIT: int | None = None
 BENCHMARK_ROOT = ROOT / "benchmark" / "BenchmarkJava"
 SAST_REPORT_HASH = ""
+CWE_MAPPING_PATH = ROOT / "prompts" / "cwe_mapping_context.txt"
+CWE_MAPPING_CONTEXT = ""
 
 # The names map to the prompt filenames from Experiment-SAST-LLM-Tools.
 # Template strings are loaded from disk first; fallback values keep the runner
@@ -75,22 +77,43 @@ def load_templates(scenario: dict[str, Any]) -> tuple[str, str, str | None]:
             try: display_path = str(path.relative_to(ROOT))
             except ValueError: display_path = str(path)
             return path.read_text(encoding="utf-8"), display_path, None if name == candidates[0] else f"Template {scenario['template']} tidak ditemukan; fallback ke {name}."
-    fallback = """Analyze this Java source code for security vulnerabilities.\n\nJava source:\n```java\n{JAVA_SOURCE_CODE}\n```\n\nTarget CWE: {CWE_NAME}\nFindSecBugs context:\n{SAST_CONTEXT}\n\nReturn only JSON: {\"vulnerable\": true or false, \"cwe\": \"CWE-n\" or \"\", \"line\": integer or null, \"reason\": \"brief explanation\"}."""
+    fallback = """Analyze this Java source code for security vulnerabilities.\n\nJava source:\n```java\n{JAVA_SOURCE_CODE}\n```\n\nTarget CWE: {CWE_NAME}\nFindSecBugs context:\n{SAST_CONTEXT}\n\nReturn only JSON: {\"vulnerable\": true or false, \"cwe\": numeric CWE ID as a string (for example \"22\") or empty string, \"line\": integer or null, \"reason\": \"brief explanation\"}."""
     return fallback, "<built-in-fallback>", f"Prompt tidak ditemukan untuk skenario {scenario['id']}; menggunakan fallback generik. Untuk penelitian final, salin folder prompts dari Experiment-SAST-LLM-Tools."
+
+
+def configure_cwe_mapping_context() -> None:
+    """Load an optional neutral CWE reference without reading per-sample labels."""
+    global CWE_MAPPING_CONTEXT
+    CWE_MAPPING_CONTEXT = (
+        CWE_MAPPING_PATH.read_text(encoding="utf-8").strip()
+        if CWE_MAPPING_PATH.is_file()
+        else ""
+    )
+
+
+def format_cwe_mapping_context(category_to_cwe: dict[str, int]) -> str:
+    """A neutral taxonomy reference: mapping only, never a sample's target label."""
+    lines = [
+        "CWE REFERENCE FOR CLASSIFICATION (use this only after independently analyzing the code):",
+        "The category labels below are OWASP Benchmark category names; CWE IDs are canonical identifiers.",
+        "Do not assume a sample's category from its sample ID. Do not claim a vulnerability solely because a category is listed.",
+    ]
+    for category, cwe_id in sorted(category_to_cwe.items()):
+        lines.append(f"- {category} -> CWE-{cwe_id}")
+    lines.append("If vulnerable=false, set cwe to an empty string. If vulnerable=true, choose the best-supported CWE ID from the code; do not copy any per-sample ground-truth label.")
+    return "\n".join(lines)
 
 
 def render_template(template: str, item: dict[str, Any], scenario: dict[str, Any]) -> str:
     """Render supported placeholders; never pass ground-truth outcome to model."""
-    code = item.get("code", item.get("java_source", ""))
+    code = item.get("code")
+    if not isinstance(code, str) or not code.strip():
+        code = item.get("java_source", "")
     if not isinstance(code, str) or not code.strip():
         raise ValueError(f"Sampel {item.get('test_name', item.get('sample_id', '?'))} tidak memiliki source code.")
-    # Dataset CWE is target-task metadata for Munson configurations only, not the vulnerable/benign label.
-    raw_cwe = item.get("cwe", item.get("target_cwe", ""))
-    cwe_name = str(raw_cwe).strip()
-    if cwe_name and not cwe_name.upper().startswith("CWE-"):
-        cwe_name = "CWE-" + cwe_name
-    if scenario["prompt_id"] in {"zero-shot", "cot", "tot"} and not cwe_name:
-        raise ValueError(f"Sampel {item.get('test_name', item.get('sample_id', '?'))} tidak memiliki CWE target; menolak menebak CWE.")
+    # Never expose per-sample target CWE/category from the dataset to the model.
+    # The shared category-to-CWE reference below is identical for every sample.
+    cwe_name = ""
     sast_context = item.get("findsecbugs_context", item.get("sast_context", ""))
     if scenario["sast"] == "findsecbugs" and not str(sast_context).strip():
         raise ValueError("Skenario FindSecBugs dipilih tetapi dataset tidak menyediakan findsecbugs_context. Tidak ada hasil scanner yang akan direkayasa.")
@@ -120,6 +143,8 @@ def render_template(template: str, item: dict[str, Any], scenario: dict[str, Any
     result = template
     for key, value in values.items():
         result = result.replace("{" + key + "}", str(value))
+    if CWE_MAPPING_CONTEXT:
+        result += "\n\n" + CWE_MAPPING_CONTEXT + "\n"
     return result
 
 
@@ -187,7 +212,7 @@ def resolve_prediction(parsed: Any) -> tuple[Any, list[dict[str, Any]]]:
     if value is None:
         replace_value("cwe", "", "null_cwe_to_empty")
     elif isinstance(value, int) and not isinstance(value, bool) and value > 0:
-        replace_value("cwe", f"CWE-{value}", "numeric_cwe_to_canonical")
+        replace_value("cwe", str(value), "numeric_cwe_to_digits")
     elif isinstance(value, str):
         token = value.strip()
         if token.lower() in {"", "n/a", "na", "none", "null", "unknown", "not applicable"}:
@@ -195,9 +220,9 @@ def resolve_prediction(parsed: Any) -> tuple[Any, list[dict[str, Any]]]:
         else:
             match = re.fullmatch(r"(?i)CWE\s*-?\s*0*(\d+)(?:\s*[:;,\-].*)?", token)
             if match and int(match.group(1)) > 0:
-                replace_value("cwe", f"CWE-{int(match.group(1))}", "cwe_format_canonicalization")
+                replace_value("cwe", str(int(match.group(1))), "cwe_format_to_digits")
             elif re.fullmatch(r"\d+", token) and int(token) > 0:
-                replace_value("cwe", f"CWE-{int(token)}", "numeric_string_cwe_to_canonical")
+                replace_value("cwe", str(int(token)), "numeric_string_cwe_to_digits")
 
     # Line can arrive as a numeric string or as a simple "line 60" value.
     value = resolved.get("line")
@@ -241,7 +266,7 @@ def normalize_prediction(parsed: Any, config_id: str | None = None) -> tuple[boo
             m = re.fullmatch(r"CWE-?(\d+)|([1-9]\d*)", cwe, re.I)
             if not m or int(m.group(1) or m.group(2)) < 1:
                 return False, ["Q4 valid positive CWE or N/A"], None
-            cwe = "CWE-" + (m.group(1) or m.group(2))
+            cwe = str(int(m.group(1) or m.group(2)))
         else: cwe = ""
         try: line = int(q3) if q3 not in (None, "", "N/A", "NA", "NONE") else None
         except (ValueError, TypeError): return False, ["Q3 positive line or N/A"], None
@@ -254,9 +279,9 @@ def normalize_prediction(parsed: Any, config_id: str | None = None) -> tuple[boo
     if cwe_value is None: cwe_value = ""
     if not isinstance(cwe_value, str): missing.append("cwe(string)")
     elif cwe_value:
-        m = re.fullmatch(r"CWE-([1-9]\d*)", cwe_value, re.I)
-        if not m: missing.append("cwe(canonical CWE-n or empty string)")
-        else: cwe_value = "CWE-" + m.group(1)
+        m = re.fullmatch(r"[1-9]\d*", cwe_value)
+        if not m: missing.append("cwe(numeric CWE ID string or empty string)")
+        else: cwe_value = str(int(cwe_value))
     line = parsed.get("line")
     if line is not None and (not isinstance(line, int) or isinstance(line, bool) or line < 1):
         missing.append("line(positive integer or null)")
@@ -279,10 +304,14 @@ def read_dataset(path: Path) -> list[dict[str, Any]]:
             except json.JSONDecodeError as exc: raise ValueError(f"JSONL rusak di baris {n}: {exc}") from exc
             if not isinstance(item, dict): raise ValueError(f"Baris {n} bukan JSON object.")
             if not (item.get("test_name") or item.get("sample_id")): raise ValueError(f"Baris {n} tidak memiliki test_name/sample_id.")
-            if not isinstance(item.get("code", item.get("java_source")), str): raise ValueError(f"Baris {n} tidak memiliki kode sumber.")
+            code = item.get("code")
+            if not isinstance(code, str) or not code.strip():
+                code = item.get("java_source")
+            if not isinstance(code, str) or not code.strip():
+                raise ValueError(f"Baris {n} tidak memiliki kode sumber.")
             rows.append(item)
     if not rows: raise ValueError("Dataset kosong.")
-    ids = [str(r.get("test_name", r.get("sample_id"))) for r in rows]
+    ids = [str(r.get("test_name") or r.get("sample_id")) for r in rows]
     seen: set[str] = set()
     duplicate_set: set[str] = set()
     for sid in ids:
@@ -300,13 +329,21 @@ def output_path(scenario: dict[str, Any], model: str, dataset_hash: str, sast_ha
     return OUTPUT_DIR / name
 
 
-def read_completed(path: Path, scenario_id: str, model: str, dataset_hash: str, sast_hash: str | None = None) -> set[str]:
+def read_completed(
+    path: Path,
+    scenario_id: str,
+    model: str,
+    dataset_hash: str,
+    sast_hash: str | None = None,
+) -> set[str]:
     completed: set[str] = set()
     if not path.exists(): return completed
     with path.open(encoding="utf-8") as f:
         for line in f:
             try: record = json.loads(line)
             except json.JSONDecodeError: continue
+            if not isinstance(record, dict):
+                continue
             same_sast = record.get("sast_report_sha256", "") == (sast_hash or "")
             if (record.get("scenario_id") == scenario_id and record.get("model") == model and record.get("dataset_sha256") == dataset_hash and same_sast and record.get("success") and record.get("schema_valid")):
                 completed.add(str(record.get("test_name", "")))
@@ -365,8 +402,14 @@ def parse_findsecbugs_xml(report: Path, rows: list[dict[str, Any]]) -> dict[str,
         root = ET.parse(report).getroot()
     except (ET.ParseError, OSError) as exc:
         raise ValueError(f"Laporan FindSecBugs tidak dapat dibaca ({report}): {exc}") from exc
-    sample_ids = {str(r.get("test_name", r.get("sample_id", ""))) for r in rows}
-    findings: dict[str, list[str]] = {sid: [] for sid in sample_ids}
+    sample_id_by_normalized = {
+        str(r.get("test_name") or r.get("sample_id") or "").upper():
+        str(r.get("test_name") or r.get("sample_id") or "")
+        for r in rows
+    }
+    findings: dict[str, list[str]] = {
+        sample_id: [] for sample_id in sample_id_by_normalized.values()
+    }
     bug_count = 0
     for bug in root.iter():
         if bug.tag.rsplit("}", 1)[-1] != "BugInstance":
@@ -374,7 +417,12 @@ def parse_findsecbugs_xml(report: Path, rows: list[dict[str, Any]]) -> dict[str,
         bug_count += 1
         attrs = " ".join(str(v) for v in bug.attrib.values())
         blob = attrs + " " + _xml_bug_text(bug) + " " + ET.tostring(bug, encoding="unicode")
-        ids = set(re.findall(r"BenchmarkTest\d{5}", blob, flags=re.IGNORECASE))
+        ids = {
+            sample_id.upper()
+            for sample_id in re.findall(
+                r"BenchmarkTest\d{5}", blob, flags=re.IGNORECASE
+            )
+        }
         if not ids:
             continue
         rule = bug.attrib.get("type", "UnknownRule")
@@ -386,8 +434,9 @@ def parse_findsecbugs_xml(report: Path, rows: list[dict[str, Any]]) -> dict[str,
             if node.tag.rsplit("}", 1)[-1] == "SourceLine":
                 line = node.attrib.get("start", "") or line
         finding = f"rule={rule}; category={category}; priority={priority}; line={line or 'n/a'}; detail={message}"
-        for sid in ids:
-            if sid in findings:
+        for normalized_id in ids:
+            sid = sample_id_by_normalized.get(normalized_id)
+            if sid is not None:
                 findings[sid].append(finding)
     if bug_count == 0:
         print("PERINGATAN: XML tidak berisi BugInstance; memeriksa validitas/kelengkapan laporan scanner.")
@@ -427,38 +476,52 @@ def ensure_findsecbugs_context(dataset_path: Path) -> tuple[list[dict[str, Any]]
     contexts = parse_findsecbugs_xml(report, rows)
     report_hash = hashlib.sha256(report.read_bytes()).hexdigest()
     for row in rows:
-        sid = str(row.get("test_name", row.get("sample_id", "")))
+        sid = str(row.get("test_name") or row.get("sample_id") or "")
         row["findsecbugs_context"] = contexts.get(sid, "")
         row["sast_context"] = row["findsecbugs_context"]
     print(f"FindSecBugs siap: {report} | konteks {len(rows)}/{len(rows)} sampel | SHA256 {report_hash[:12]}")
     return rows, report_hash
 
 
-def select_scenario(dataset_path: Path, limit: int | None) -> tuple[dict[str, Any], str, bool]:
+def select_scenario(
+    dataset_path: Path,
+    limit: int | None,
+    model: str | None = None,
+) -> tuple[dict[str, Any], str, bool]:
     """Present one entry per model + prompt configuration + thinking mode."""
+    configure_cwe_mapping_context()
     rows = read_dataset(dataset_path)
     sast_hash = SAST_REPORT_HASH
-    if any(s["sast"] == "findsecbugs" for s in SCENARIOS) and not sast_hash:
-        rows, sast_hash = ensure_findsecbugs_context(dataset_path)
     if limit is not None:
         if limit < 1:
             raise ValueError("--limit harus >= 1")
         rows = rows[:limit]
     dataset_hash = hashlib.sha256(dataset_path.read_bytes()).hexdigest()
-    selected_ids = {str(r.get("test_name", r.get("sample_id"))) for r in rows}
+    selected_ids = {
+        str(r.get("test_name") or r.get("sample_id"))
+        for r in rows
+    }
     menu: list[tuple[dict[str, Any], str, bool]] = []
-    for model in MODELS:
+    for selected_model in ([model] if model else MODELS):
         for scenario in SCENARIOS:
-            thinking_modes = (False, True) if model == "gemma4:e4b" else (False,)
+            thinking_modes = (
+                (False, True) if selected_model == "gemma4:e4b" else (False,)
+            )
             for think in thinking_modes:
-                menu.append((scenario, model, think))
+                menu.append((scenario, selected_model, think))
     print("\nSkenario:")
     for idx, (scenario, model, think) in enumerate(menu, 1):
         runtime = dict(scenario)
         runtime["think"] = think
         scenario_sast_hash = sast_hash if scenario["sast"] == "findsecbugs" else None
         log_path = output_path(runtime, model, dataset_hash, scenario_sast_hash)
-        completed = read_completed(log_path, scenario["id"], model, dataset_hash, scenario_sast_hash) & selected_ids
+        completed = read_completed(
+            log_path,
+            scenario["id"],
+            model,
+            dataset_hash,
+            scenario_sast_hash,
+        ) & selected_ids
         label = f"{scenario['id']} ({model} --think={str(think).lower()})"
         print(f"{idx:2}. {label} (completed {len(completed)}/{len(rows)})")
     while True:
@@ -476,41 +539,61 @@ def select_scenario(dataset_path: Path, limit: int | None) -> tuple[dict[str, An
         print("Pilihan tidak valid. Ketik nomor skenario yang ditampilkan.")
 
 
-def evaluate_pilot(rows: list[dict[str, Any]], records: list[dict[str, Any]]) -> dict[str, Any]:
-    truth_by_id = {str(r.get("test_name", r.get("sample_id"))): r for r in rows}
-    pred_by_id = {}
-    invalid = 0
-    errors = 0
+def summarize_predictions(rows: list[dict[str, Any]], records: list[dict[str, Any]]) -> dict[str, Any]:
+    """Summarize model outputs only; deliberately does not compare with ground truth."""
+    selected_ids = {str(r.get("test_name") or r.get("sample_id")) for r in rows}
+    latest: dict[str, dict[str, Any]] = {}
     for record in records:
         sid = str(record.get("test_name", ""))
-        if sid not in truth_by_id:
+        if sid in selected_ids:
+            latest[sid] = record
+    valid = invalid = failed = vulnerable = not_vulnerable = cwe_assigned = 0
+    missing: list[str] = []
+    cwe_counts: dict[str, int] = {}
+    predictions: list[dict[str, Any]] = []
+    for row in rows:
+        sid = str(row.get("test_name") or row.get("sample_id"))
+        record = latest.get(sid)
+        if not record:
+            missing.append(sid)
             continue
-        if record.get("schema_valid") and isinstance(record.get("parsed"), dict): pred_by_id[sid] = record["parsed"]
-        elif record.get("success"): invalid += 1
-        else: errors += 1
-    tp=fp=tn=fn=0; evaluated=0; missing=[]
-    for sid, item in truth_by_id.items():
-        pred = pred_by_id.get(sid)
-        # labels support the existing JSONL schema's real_vulnerability or vulnerable.
-        truth = item.get("real_vulnerability", item.get("vulnerable"))
-        if not isinstance(truth, bool):
-            if isinstance(truth, str) and truth.lower() in {"true","false"}: truth = truth.lower()=="true"
-            else: continue
-        if not pred: missing.append(sid); continue
-        evaluated += 1
-        p = pred["vulnerable"]
-        if truth and p: tp+=1
-        elif not truth and p: fp+=1
-        elif truth and not p: fn+=1
-        else: tn+=1
-    precision=tp/(tp+fp) if tp+fp else 0.0
-    recall=tp/(tp+fn) if tp+fn else 0.0
-    f1=2*precision*recall/(precision+recall) if precision+recall else 0.0
-    acc=(tp+tn)/evaluated if evaluated else 0.0
-    return {"dataset_records":len(rows),"predictions_valid":len(pred_by_id),"evaluated":evaluated,"missing_predictions":len(missing),"invalid_responses":invalid,"failed_calls":errors,"tp":tp,"fp":fp,"fn":fn,"tn":tn,"precision":precision,"recall":recall,"f1":f1,"accuracy":acc,"missing_sample_ids":missing[:100]}
+        if not record.get("success"):
+            failed += 1
+            continue
+        if not record.get("schema_valid") or not isinstance(record.get("parsed"), dict):
+            invalid += 1
+            continue
+        pred = record["parsed"]
+        valid += 1
+        is_vulnerable = pred.get("vulnerable") is True
+        if is_vulnerable:
+            vulnerable += 1
+            cwe = str(pred.get("cwe") or "").strip().upper()
+            if cwe:
+                cwe_assigned += 1
+                cwe_counts[cwe] = cwe_counts.get(cwe, 0) + 1
+        else:
+            not_vulnerable += 1
+        predictions.append({"test_name": sid, "vulnerable": pred.get("vulnerable"), "cwe": pred.get("cwe"), "line": pred.get("line"), "reason": pred.get("reason")})
+    return {
+        "dataset_records": len(rows),
+        "predictions_valid": valid,
+        "vulnerable_detected_by_model": vulnerable,
+        "classified_not_vulnerable_by_model": not_vulnerable,
+        "vulnerable_predictions_with_cwe": cwe_assigned,
+        "cwe_distribution": cwe_counts,
+        "missing_predictions": len(missing),
+        "invalid_responses": invalid,
+        "failed_calls": failed,
+        "missing_sample_ids": missing[:100],
+        "predictions": predictions,
+    }
 
 
 def run_scenario(scenario: dict[str, Any], model: str, dataset_path: Path, *, limit: int | None, timeout: int, resume: bool, think_override: bool | None = None) -> int:
+    if timeout < 1:
+        raise ValueError("timeout harus >= 1")
+    configure_cwe_mapping_context()
     rows = read_dataset(dataset_path)
     sast_hash = SAST_REPORT_HASH
     if scenario["sast"] == "findsecbugs":
@@ -535,11 +618,23 @@ def run_scenario(scenario: dict[str, Any], model: str, dataset_path: Path, *, li
         raise RuntimeError(f"Model {model!r} tidak ditemukan di Ollama. Tersedia: {', '.join(sorted(models_available))}")
     outpath = output_path(scenario_runtime, model, dataset_hash, sast_hash)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    completed_all = read_completed(outpath, scenario["id"], model, dataset_hash, sast_hash if scenario["sast"] == "findsecbugs" else None) if resume else set()
-    selected_ids = {str(r.get("test_name", r.get("sample_id"))) for r in rows}
+    completed_all = read_completed(
+        outpath,
+        scenario["id"],
+        model,
+        dataset_hash,
+        sast_hash if scenario["sast"] == "findsecbugs" else None,
+    ) if resume else set()
+    selected_ids = {
+        str(r.get("test_name") or r.get("sample_id"))
+        for r in rows
+    }
     completed = completed_all & selected_ids
     total = len(rows)
-    pending = [r for r in rows if str(r.get("test_name", r.get("sample_id"))) not in completed]
+    pending = [
+        r for r in rows
+        if str(r.get("test_name") or r.get("sample_id")) not in completed
+    ]
     print("\nRingkasan eksekusi")
     print(f"  Skenario : {scenario['id']}")
     print(f"  Model    : {model}")
@@ -557,7 +652,7 @@ def run_scenario(scenario: dict[str, Any], model: str, dataset_path: Path, *, li
     # Preserve run config/provenance in each JSONL row.
     with outpath.open("a", encoding="utf-8") as output:
         for index, item in enumerate(rows, 1):
-            sid = str(item.get("test_name", item.get("sample_id")))
+            sid = str(item.get("test_name") or item.get("sample_id"))
             if sid in completed:
                 print(f"[{index}/{total}] {sid} SKIP (sudah valid dan tersimpan)")
                 continue
@@ -574,7 +669,8 @@ def run_scenario(scenario: dict[str, Any], model: str, dataset_path: Path, *, li
             parsed_raw = parse_json_response(result["response"], scenario["id"]) if result["success"] else None
             resolved_raw, resolver_changes = resolve_prediction(parsed_raw)
             schema_valid, missing_fields, normalized = normalize_prediction(resolved_raw, scenario["id"])
-            record = {"test_name":sid,"scenario_id":scenario["id"],"prompt_id":scenario["prompt_id"],"sast":scenario["sast"],"think":think,"model":model,"timestamp":utc_now(),"success":result["success"],"elapsed_seconds":result["elapsed_seconds"],"raw_response":result["response"],"raw_thinking":result["thinking"],"parsed_raw":parsed_raw,"parsed":normalized if normalized is not None else resolved_raw,"resolver_changes":resolver_changes,"schema_valid":schema_valid,"missing_fields":missing_fields,"error":result["error"] if not result["success"] else ("SCHEMA_INVALID" if not schema_valid else None),"dataset_sha256":dataset_hash,"sast_report_sha256":sast_hash if scenario["sast"] == "findsecbugs" else "","prompt_file":template_name,"prompt_sha256":sha256_text(template),"rendered_prompt_sha256":sha256_text(prompt),"options":options}
+            prediction = normalized if normalized is not None else resolved_raw
+            record = {"test_name":sid,"scenario_id":scenario["id"],"prompt_id":scenario["prompt_id"],"sast":scenario["sast"],"think":think,"model":model,"timestamp":utc_now(),"success":result["success"],"elapsed_seconds":result["elapsed_seconds"],"raw_response":result["response"],"raw_thinking":result["thinking"],"parsed_raw":parsed_raw,"parsed":prediction,"resolver_changes":resolver_changes,"schema_valid":schema_valid,"missing_fields":missing_fields,"error":result["error"] if not result["success"] else ("SCHEMA_INVALID" if not schema_valid else None),"dataset_sha256":dataset_hash,"sast_report_sha256":sast_hash if scenario["sast"] == "findsecbugs" else "","prompt_file":template_name,"prompt_sha256":sha256_text(template),"rendered_prompt_sha256":sha256_text(prompt),"options":options}
             # Save every attempt, even API failures and schema-invalid responses.
             output.write(json.dumps(record,ensure_ascii=False)+"\n"); output.flush()
             if not result["success"]: counts["error"]+=1; status="API_ERROR"
@@ -590,19 +686,20 @@ def run_scenario(scenario: dict[str, Any], model: str, dataset_path: Path, *, li
                 if rec.get("dataset_sha256")==dataset_hash and rec.get("scenario_id")==scenario["id"] and rec.get("model")==model:
                     current_records.append(rec)
             except json.JSONDecodeError: pass
-    summary=evaluate_pilot(rows,current_records)
-    summary.update({"scenario_id":scenario["id"],"model":model,"think":think,"sast":scenario["sast"],"dataset_sha256":dataset_hash,"generated_at_utc":utc_now(),"elapsed_seconds":round(time.perf_counter()-run_start,3),"log_file":str(outpath)})
+    summary=summarize_predictions(rows,current_records)
+    summary.update({"scenario_id":scenario["id"],"model":model,"think":think,"sast":scenario["sast"],"dataset_sha256":dataset_hash,"cwe_mapping_context":CWE_MAPPING_CONTEXT,"generated_at_utc":utc_now(),"elapsed_seconds":round(time.perf_counter()-run_start,3),"log_file":str(outpath)})
     summary_path=outpath.with_suffix(".summary.json")
     summary_path.write_text(json.dumps(summary,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     print("\n"+"="*60+"\nRINGKASAN PILOT\n"+"="*60)
     print(f"Sampel dataset      : {summary['dataset_records']}")
     print(f"Prediksi valid      : {summary['predictions_valid']}")
-    print(f"Dievaluasi          : {summary['evaluated']}")
-    print(f"Prediksi hilang     : {summary['missing_predictions']}")
-    print(f"Respons invalid     : {summary['invalid_responses']}")
-    print(f"Pemanggilan gagal   : {summary['failed_calls']}")
-    print(f"TP={summary['tp']} FP={summary['fp']} FN={summary['fn']} TN={summary['tn']}")
-    print(f"Precision={summary['precision']:.4f} Recall={summary['recall']:.4f} F1={summary['f1']:.4f} Accuracy={summary['accuracy']:.4f}")
+    print(f"Terdeteksi rentan oleh model : {summary['vulnerable_detected_by_model']}")
+    print(f"Diklasifikasi tidak rentan   : {summary['classified_not_vulnerable_by_model']}")
+    print(f"Prediksi rentan dengan CWE   : {summary['vulnerable_predictions_with_cwe']}")
+    print(f"Distribusi CWE               : {summary['cwe_distribution']}")
+    print(f"Prediksi hilang              : {summary['missing_predictions']}")
+    print(f"Respons invalid              : {summary['invalid_responses']}")
+    print(f"Pemanggilan gagal            : {summary['failed_calls']}")
     print(f"Catatan             : {outpath}")
     print(f"Ringkasan JSON      : {summary_path}")
     return 0 if summary["missing_predictions"]==0 and summary["invalid_responses"]==0 and summary["failed_calls"]==0 else 1
@@ -629,10 +726,11 @@ def main() -> int:
                 default_think = False
             think_override=default_think if args.think is None else args.think=="true"
         else:
-            global SAST_REPORT_HASH
-            _, SAST_REPORT_HASH = ensure_findsecbugs_context(args.dataset)
-            scenario, selected_model, selected_think = select_scenario(args.dataset, args.limit)
-            model=args.model or selected_model
+            scenario, model, selected_think = select_scenario(
+                args.dataset,
+                args.limit,
+                model=args.model,
+            )
             think_override=selected_think if args.think is None else args.think=="true"
         return run_scenario(scenario,model,args.dataset,limit=args.limit,timeout=args.timeout,resume=not args.no_resume,think_override=think_override)
     except (OSError,ValueError,RuntimeError) as exc:

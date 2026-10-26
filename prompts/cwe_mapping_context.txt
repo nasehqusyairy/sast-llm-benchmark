@@ -1,0 +1,16 @@
+CWE REFERENCE FOR CLASSIFICATION (use this only after independently analyzing the code):
+The category labels below are OWASP Benchmark category names; CWE IDs are canonical identifiers.
+Do not assume a sample's category from its sample ID. Do not claim a vulnerability solely because a category is listed.
+- cmdi -> CWE-78
+- crypto -> CWE-327
+- hash -> CWE-328
+- ldapi -> CWE-90
+- pathtraver -> CWE-22
+- securecookie -> CWE-614
+- sqli -> CWE-89
+- trustbound -> CWE-501
+- weakrand -> CWE-330
+- xpathi -> CWE-643
+- xss -> CWE-79
+
+If vulnerable=false, set cwe to an empty string. If vulnerable=true, choose the best-supported CWE ID from the code; do not copy any per-sample ground-truth label.
