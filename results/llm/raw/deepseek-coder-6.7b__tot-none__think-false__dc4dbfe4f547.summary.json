@@ -1,0 +1,1503 @@
+{
+  "dataset_records": 2740,
+  "predictions_valid": 210,
+  "vulnerable_detected_by_model": 195,
+  "classified_not_vulnerable_by_model": 15,
+  "vulnerable_predictions_with_cwe": 195,
+  "cwe_distribution": {
+    "22": 15,
+    "328": 14,
+    "327": 27,
+    "79": 41,
+    "89": 51,
+    "90": 5,
+    "330": 37,
+    "78": 2,
+    "614": 3
+  },
+  "missing_predictions": 0,
+  "invalid_responses": 0,
+  "failed_calls": 2530,
+  "missing_sample_ids": [],
+  "predictions": [
+    {
+      "test_name": "BenchmarkTest00001",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE reference."
+    },
+    {
+      "test_name": "BenchmarkTest00002",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The 'setMaxAge' method of the 'Cookie' class in Java sets the maximum age of the cookie in seconds. However, it does not check if the provided value is negative. If a negative value is passed, the browser will interpret it as zero, which means the cookie will be deleted immediately. This can lead to potential security issues if the cookie is used for session management."
+    },
+    {
+      "test_name": "BenchmarkTest00003",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 54,
+      "reason": "The code is using the java.security.MessageDigest class to hash input data. The MessageDigest.getInstance(java.lang.String) method is used to get an instance of a MessageDigest with the specified name. The input to this method is user-supplied and is not properly sanitized or validated. This could potentially lead to a security vulnerability if an attacker can control the name of the MessageDigest instance."
+    },
+    {
+      "test_name": "BenchmarkTest00004",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00005",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any key management or key derivation. DES is a weak encryption standard and should not be used for any sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00006",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The application is using the user-supplied input directly in the response without any sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00007",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the use of `response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()))`. This line of code is directly outputting the exception message to the user without any sanitization. This could lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00008",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 26,
+      "reason": "The code is vulnerable to SQL injection because the input from a header is directly used in a SQL statement without any sanitization or parameterization. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00009",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00010",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE reference."
+    },
+    {
+      "test_name": "BenchmarkTest00011",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": null,
+      "reason": "The code is vulnerable to path traversal attacks. The 'param' variable is used to create a file path. If an attacker can control the value of 'param', they could potentially access files outside of the intended directory."
+    },
+    {
+      "test_name": "BenchmarkTest00012",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 38,
+      "reason": "The code is using the javax.naming.directory.InitialDirContext.search() method to search for LDAP entries. The method takes a filter string and an array of filter arguments. The filter string is constructed with user input without proper validation or sanitization. This could lead to LDAP injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00013",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code uses the format method of the response writer to output user-supplied data. The format method is vulnerable to cross-site scripting (XSS) attacks. The user-supplied data is directly inserted into the response without any sanitization, which allows an attacker to inject malicious scripts."
+    },
+    {
+      "test_name": "BenchmarkTest00014",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The code uses the format method of the response writer to output user input. The format method is vulnerable to XSS attacks if the user input is not properly sanitized. The user input is directly passed to the format method without any sanitization, which means it can contain JavaScript code. This can lead to XSS vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00015",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the fact that the server is echoing user input directly to the response without any sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00016",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references. It sets a secure and HttpOnly cookie, but no other security-related issues are apparent."
+    },
+    {
+      "test_name": "BenchmarkTest00017",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 38,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is present in the line where the response is written to the client. The user-supplied input is directly written to the response without any sanitization or encoding, which can lead to XSS attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00018",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00019",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses a hard-coded encryption algorithm ('DESede/ECB/PKCS5Padding') which is susceptible to a weak encryption standard. The encryption key is also generated using a weak random number generator. This could lead to serious security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00020",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any form of key management or usage. DES is a weak encryption standard and should not be used for any sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00021",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": null,
+      "reason": "The code is vulnerable to LDAP injection attacks. The user input is directly included in the LDAP search filter without proper sanitization or encoding. This can lead to unauthorized data access or manipulation."
+    },
+    {
+      "test_name": "BenchmarkTest00022",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references. It uses the SHA-256 hashing algorithm correctly and does not have any obvious SQL injection or cross-site scripting (XSS) vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00023",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 26,
+      "reason": "The code uses java.util.Random().nextFloat() to generate a random float number. This method is not cryptographically strong and can be exploited for weak randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00024",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 24,
+      "reason": "The code is using a PreparedStatement with a parameterized query, but the query itself contains a hardcoded password. This could lead to SQL Injection vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00025",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 28,
+      "reason": "The code is vulnerable to SQL injection because the input from the request parameter is directly included in a SQL query without any sanitization or parameterization. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00026",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "SQL Injection vulnerability in the query string construction. The code is using string concatenation to build the SQL query, which can lead to SQL injection if the input is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00027",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 24,
+      "reason": "The code is vulnerable to SQL injection because it directly includes user input in an SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00028",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The code is vulnerable to a path traversal attack. The file path is derived from user input without any validation or sanitization. This can lead to writing to arbitrary files."
+    },
+    {
+      "test_name": "BenchmarkTest00029",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": null,
+      "reason": "The code uses the java.security.MessageDigest class to hash user input. However, the code does not properly handle the case where the input is an instance of java.io.InputStream. This could lead to a potential security vulnerability if the input stream is not properly managed."
+    },
+    {
+      "test_name": "BenchmarkTest00030",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The code uses the printf method of the response writer to output user input. The user input is passed as a format string, which can lead to cross-site scripting (XSS) vulnerability if the user input contains special characters that are interpreted as format specifiers."
+    },
+    {
+      "test_name": "BenchmarkTest00031",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the use of the `response.getWriter().println()` method. This method directly writes to the HTTP response without any encoding, which can lead to XSS vulnerabilities. The attacker can inject malicious scripts into the 'param' variable, which will be written to the response without any sanitization."
+    },
+    {
+      "test_name": "BenchmarkTest00032",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 32,
+      "reason": "SQL Injection vulnerability in the code. The SQL query is constructed using user input without proper sanitization. This can lead to SQL injection attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00033",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in the SQL query without any sanitization. This can be mitigated by using parameterized queries or prepared statements."
+    },
+    {
+      "test_name": "BenchmarkTest00034",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 30,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in the SQL query without any sanitization or parameterized query. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00035",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses a hard-coded encryption algorithm (DESede/ECB/PKCS5Padding) which is a security risk. The encryption key is also generated using a weak randomness source (javax.crypto.KeyGenerator.getInstance(\"DES\").generateKey())."
+    },
+    {
+      "test_name": "BenchmarkTest00036",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 34,
+      "reason": "The server is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is present in the response writer where the server writes the value of the 'param' variable to the response. The 'param' variable is derived from the request parameters and is written directly to the response without any sanitization or encoding. This can lead to XSS vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00037",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because it uses a PreparedStatement without any parameter binding. The attacker can manipulate the SQL query by providing a value for the USERNAME parameter."
+    },
+    {
+      "test_name": "BenchmarkTest00038",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "SQL Injection vulnerability in the query string construction. The parameter 'param' is directly included in the SQL query without any sanitization or escaping. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00039",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": null,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00040",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00041",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server is sending user input directly to the client without any sanitization. This could lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00042",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextInt() to generate a random number. This method is not suitable for cryptographic purposes and does not provide strong randomness. The weakness is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00043",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 26,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00044",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": null,
+      "reason": "The code is using the javax.naming.directory.DirContext class from the javax.naming package, which is a part of the Java Naming and Directory Interface (JNDI). JNDI is a framework for accessing distributed directory services. The code is vulnerable to a LDAP injection attack if the input from the user is not properly sanitized and used in an LDAP search query. This can be mitigated by using parameterized queries or prepared statements."
+    },
+    {
+      "test_name": "BenchmarkTest00045",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The code is creating a FileOutputStream using a FileInputStream without any validation or sanitization. This could potentially lead to a path traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00046",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": null,
+      "reason": "The code uses the java.security.MessageDigest class to hash user input. However, the code does not properly handle exceptions that may be thrown when creating the MessageDigest instance. This could potentially lead to a Denial of Service (DoS) attack if an attacker can cause the system to throw a NoSuchAlgorithmException."
+    },
+    {
+      "test_name": "BenchmarkTest00047",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 38,
+      "reason": "The code uses the format method of the PrintWriter object, which can lead to cross-site scripting (XSS) vulnerabilities if the format string contains user-supplied data. The user-supplied data is passed as the first argument to the format method, which is then interpreted as a format string. If the format string contains format specifiers (like %s), the format method will attempt to replace these with the arguments passed in the second argument to the format method. In this case, the user-supplied data is passed as the second argument, which could lead to XSS vulnerabilities if the user-supplied data contains JavaScript code."
+    },
+    {
+      "test_name": "BenchmarkTest00048",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 39,
+      "reason": "The server is outputting user-supplied input directly to the response without any sanitization. This could lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00049",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code is secure as it does not contain any obvious security vulnerabilities. It is a simple servlet that takes a parameter from the URL, decodes it, and sends it back in the response. There is no user input that could be manipulated to cause an XSS or SQL injection."
+    },
+    {
+      "test_name": "BenchmarkTest00050",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any initialization vector (IV) which could lead to predictable ciphertext. DES is a weak encryption standard and should not be used for new applications."
+    },
+    {
+      "test_name": "BenchmarkTest00051",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The user input is directly inserted into the response without any sanitization, which can lead to XSS vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00052",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": null,
+      "reason": "The code is vulnerable to SQL injection because the input from the request is directly used in a SQL statement without any sanitization or parameterization. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00053",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 41,
+      "reason": "The 'javax.servlet.http.Cookie' object is created with the 'setSecure(true)' method, which means the cookie will only be sent over HTTPS. However, the 'setHttpOnly(true)' method is not called, which means the cookie can be accessed via JavaScript, potentially leading to cross-site scripting (XSS) attacks. This is a security vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00054",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses the AES/GCM cipher for encryption, which is a good practice. However, the initialization vector (IV) is generated using SecureRandom, which is a good practice. However, the IV is hardcoded in the code. This could potentially lead to a vulnerability if an attacker can predict the IV."
+    },
+    {
+      "test_name": "BenchmarkTest00055",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without setting a secure random initialization vector (IV). DES is a weak encryption standard and using a static IV can lead to vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00056",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 44,
+      "reason": "The 'javax.servlet.http.Cookie' object is created with a 'secure' flag set to true, but the 'setSecure' method does not check if the 'request' is using a secure channel (HTTPS). This could potentially lead to a cookie being sent over an insecure channel, potentially exposing sensitive information."
+    },
+    {
+      "test_name": "BenchmarkTest00057",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 38,
+      "reason": "The 'javax.servlet.http.Cookie' object is created with a 'maxAge' value of 180 seconds (3 minutes). This is a potential security issue as the cookie could be stolen by an attacker and used to impersonate a user. This can be mitigated by setting the 'maxAge' value to 0 or to a negative value, which will delete the cookie immediately."
+    },
+    {
+      "test_name": "BenchmarkTest00058",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 44,
+      "reason": "The code uses the AES/CCM/NoPadding cipher mode, which is a good practice for confidentiality, but lacks a proper random nonce. This could lead to potential weaknesses in the encryption."
+    },
+    {
+      "test_name": "BenchmarkTest00059",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 44,
+      "reason": "The code uses a hard-coded secret key for encryption. This can lead to serious security issues if the key is lost or compromised. It is recommended to use a secure method to generate and store the encryption key."
+    },
+    {
+      "test_name": "BenchmarkTest00060",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": null,
+      "reason": "The servlet is using a hardcoded path for the RequestDispatcher. This could potentially lead to path traversal vulnerabilities if the path is not correctly validated."
+    },
+    {
+      "test_name": "BenchmarkTest00061",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": null,
+      "reason": "The servlet is using a hardcoded path for the cookie path and domain. This can lead to path traversal vulnerabilities if the application is running on a multi-tenant server where the cookie is being set for a different domain or path."
+    },
+    {
+      "test_name": "BenchmarkTest00062",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00063",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The servlet sets a secure cookie with HttpOnly flag but does not set the Secure flag. This means the cookie can be accessed via client-side scripts, not just through the HTTP protocol. This could potentially lead to information disclosure or even session hijacking."
+    },
+    {
+      "test_name": "BenchmarkTest00064",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The servlet sets a secure cookie with HttpOnly flag but does not set the Secure flag. This means the cookie can be accessed by client-side scripts, potentially leading to information disclosure or cookie theft attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00065",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The 'BenchmarkTest00065' cookie is set with a path that includes the servlet path. This means that the cookie can be accessed by any servlet in the application, including potentially malicious ones. This could lead to path traversal vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00066",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.lang.Math.random() to generate a random number. This method is not suitable for cryptographic use and does not provide a high level of randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00067",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.lang.Math.random() to generate a random number. This method is not suitable for cryptographic use and does not provide a high level of randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00068",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.lang.Math.random() to generate a random number. This method is not suitable for cryptographic purposes and does not provide a high level of randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00069",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 54,
+      "reason": "The code uses the SHA-384 hash function, which is a cryptographic hash function. The hash function is used to store a sensitive value in a file. The sensitive value is derived from a cookie, which is sent in the request. The cookie value is not properly sanitized before being used in the hash function. This could lead to a security vulnerability if an attacker can manipulate the cookie value."
+    },
+    {
+      "test_name": "BenchmarkTest00070",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 44,
+      "reason": "The code uses the SHA1 algorithm, which is weak and can be easily broken. The input to the hash function is derived from a user-supplied parameter, which is not properly sanitized. This could lead to the exposure of sensitive information."
+    },
+    {
+      "test_name": "BenchmarkTest00071",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 64,
+      "reason": "The code uses the SHA1 algorithm for hashing, which is considered insecure. The hash value is written to a file without any additional security measures."
+    },
+    {
+      "test_name": "BenchmarkTest00072",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 64,
+      "reason": "The code uses the SHA-512 algorithm for hashing, which is secure. However, the code does not check if the input to the hashing function is properly sanitized, which could lead to vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00073",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 64,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the hash algorithm used is hardcoded as 'MD5', which is a weak algorithm and can be easily broken with modern hardware. The hash value is then stored in a file without any additional security measures."
+    },
+    {
+      "test_name": "BenchmarkTest00074",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 101,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the hash algorithm is hardcoded to SHA512, which is a strong cryptographic hash function. This could potentially be a vulnerability if an attacker can predict the output of the hash function. The hash value is then written to a file without any additional security measures, which could potentially lead to sensitive data being exposed."
+    },
+    {
+      "test_name": "BenchmarkTest00075",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 54,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the hash algorithm is hardcoded to SHA5, which is not secure. It should be configurable to allow for a higher level of security."
+    },
+    {
+      "test_name": "BenchmarkTest00076",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 64,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the hash algorithm is hardcoded to SHA5, which is not secure. It should be configurable to avoid this issue."
+    },
+    {
+      "test_name": "BenchmarkTest00077",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 44,
+      "reason": "The code is executing a command line operation using the ProcessBuilder class. The command is built based on the value of the 'bar' variable, which is derived from the 'param' variable. The 'param' variable is derived from a cookie. The cookie value is not properly sanitized before being used in the command. This could lead to OS command injection vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00078",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextFloat() to generate a random float number. This method is not cryptographically strong and can be exploited for vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00079",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextFloat() to generate a random float number. This method is not cryptographically strong and can be exploited for vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00080",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextFloat() to generate a random float number. This method is not cryptographically strong and can be exploited for vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00081",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextGaussian() to generate a random number. This method is not suitable for cryptographic purposes and does not provide a secure source of randomness. The vulnerability is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00082",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextInt(int) to generate a random number. This method is not cryptographically strong and can be exploited for vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00083",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextInt(int) to generate a random number. The input to this function is a constant value 99. This could potentially lead to weak randomness as the same value is used for seeding the random number generator. This could potentially lead to predictability in the random numbers generated."
+    },
+    {
+      "test_name": "BenchmarkTest00084",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextInt() without seeding it, which can lead to predictable random numbers."
+    },
+    {
+      "test_name": "BenchmarkTest00085",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextLong() to generate a random long value. This method generates a pseudorandom, long value between Long.MIN_VALUE and Long.MAX_VALUE. The randomness is not strong enough for cryptographic use."
+    },
+    {
+      "test_name": "BenchmarkTest00086",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 42,
+      "reason": "The code uses java.util.Random().nextLong() to generate a random long value. This method generates a pseudorandom, uniformly distributed long value between Long.MIN_VALUE and Long.MAX_VALUE. The randomness is not strong enough for cryptographic use."
+    },
+    {
+      "test_name": "BenchmarkTest00087",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 24,
+      "reason": "The 'setSecure(true)' method is used to set the secure flag on the cookie. This flag is used by the browser to determine if the cookie should be sent over an encrypted connection. However, the 'setDomain()' method is called with a domain name that is derived from the request URL. This could potentially allow the cookie to be sent to a different domain than the one the request was made to, potentially leading to security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00088",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00089",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 24,
+      "reason": "The 'setSecure(true)' method is used to set the secure flag on the cookie. However, the 'setDomain()' method is not called on the cookie, which could lead to potential security issues if the domain is not correctly set."
+    },
+    {
+      "test_name": "BenchmarkTest00090",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 42,
+      "reason": "The code is executing a command line instruction based on user input without any sanitization. This can lead to command injection vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00091",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 44,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the use of `response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()))`. This line of code is directly outputting the exception message to the user without any sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00092",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 101,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the use of `response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()))`. This line of code is directly outputting user-supplied data to the response without any encoding or sanitization, which can lead to XSS vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00093",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 64,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is present in the doPost method where the user input is directly included in the response without any sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00094",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextDouble() to generate a random number. This method is not suitable for cryptographic purposes and does not provide strong randomness. The weakness is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00095",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextGaussian() to generate a random number. This method is not suitable for cryptographic purposes and does not provide strong randomness. The weakness is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00096",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 34,
+      "reason": "The code uses java.security.SecureRandom.nextInt(int) to generate a random number. The number is then used to generate a 'rememberMe' cookie. This is a weak random number generator as it uses SHA1PRNG, which is not a secure random number generator."
+    },
+    {
+      "test_name": "BenchmarkTest00097",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 37,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the fact that the server is directly inserting user-supplied input into the response without any sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00098",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code is secure as it does not contain any obvious vulnerabilities. It sets secure and HttpOnly cookies, but does not seem to have any SQL injection vulnerabilities, command injection, path traversal, weak random number generation, or any other common web application vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00099",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00100",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is using a PreparedStatement with a parameterized query, but the parameter is being set directly in the query string without any sanitization. This could lead to SQL Injection vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00101",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is using a PreparedStatement with a parameterized query that could be vulnerable to SQL Injection. The parameter is directly concatenated to the SQL query without any sanitization or escaping, which makes it susceptible to SQL Injection attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00102",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 39,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. The user input is used in the SQL query without being properly escaped, which allows an attacker to manipulate the query and execute arbitrary SQL commands."
+    },
+    {
+      "test_name": "BenchmarkTest00103",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization or parameterization. The input is used in the SQL query without being properly escaped, which allows an attacker to manipulate the query and execute arbitrary SQL commands."
+    },
+    {
+      "test_name": "BenchmarkTest00104",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 51,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00105",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. The input from the cookie is directly used in the SQL query without any sanitization or parameterization."
+    },
+    {
+      "test_name": "BenchmarkTest00106",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in the SQL query without any sanitization. This can be mitigated by using parameterized queries or prepared statements."
+    },
+    {
+      "test_name": "BenchmarkTest00107",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 54,
+      "reason": "SQL Injection vulnerability exists due to the use of a parameterized query. The parameter value is directly appended to the SQL statement without any sanitization, which allows an attacker to manipulate the query and execute arbitrary SQL commands."
+    },
+    {
+      "test_name": "BenchmarkTest00108",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 44,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00109",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in the SQL query without any sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00110",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 52,
+      "reason": "SQL injection vulnerability in the SQL query. The SQL query is constructed using user input without proper sanitization or parameterization."
+    },
+    {
+      "test_name": "BenchmarkTest00111",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00112",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization. This can be mitigated by using parameterized queries or prepared statements."
+    },
+    {
+      "test_name": "BenchmarkTest00113",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00114",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization. The user input is inserted into the SQL query without any parameterized queries or prepared statements."
+    },
+    {
+      "test_name": "BenchmarkTest00115",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization. This can be mitigated by using parameterized queries or prepared statements."
+    },
+    {
+      "test_name": "BenchmarkTest00116",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 51,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in an SQL query without proper sanitization. This can be mitigated by using parameterized queries or prepared statements."
+    },
+    {
+      "test_name": "BenchmarkTest00117",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 51,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in an SQL query without any sanitization. The user input is used in the 'emplid' attribute of the XPath expression."
+    },
+    {
+      "test_name": "BenchmarkTest00118",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 44,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in an SQL query without any sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00119",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 101,
+      "reason": "The code uses DES encryption without setting the initialization vector (IV) properly. DES is a block cipher and requires an 8-byte initialization vector. The IV is not properly set in the code. This can lead to vulnerabilities such as predictable ciphertexts."
+    },
+    {
+      "test_name": "BenchmarkTest00120",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any key management or initialization vector (IV) management. DES is a weak encryption standard and should not be used for any sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00121",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses the AES/GCM cipher without specifying an IV. This can lead to predictable encryption and vulnerabilities to attacks like the padding oracle attack."
+    },
+    {
+      "test_name": "BenchmarkTest00122",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses the AES/GCM cipher mode without specifying an initialization vector (IV). This can lead to predictable encryption and vulnerabilities to attacks that exploit weaknesses in the IV generation."
+    },
+    {
+      "test_name": "BenchmarkTest00123",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any form of key management or validation. DES is a weak encryption standard and should not be used for any sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00124",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 34,
+      "reason": "The code uses DES encryption without setting an initialization vector (IV). DES is a block cipher and requires an IV to ensure that the same plaintext does not result in the same ciphertext each time it is encrypted. The IV should be random and secret for each encryption."
+    },
+    {
+      "test_name": "BenchmarkTest00125",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any form of key management or validation. DES is a weak encryption standard and should not be used for any sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00126",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses the AES/CCM/NoPadding cipher which is a secure cipher but it does not specify an initialization vector (IV) which is required for CCM mode. This could potentially lead to vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00127",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses a hard-coded secret key for encryption, which is a security vulnerability. The secret key is generated using javax.crypto.KeyGenerator.getInstance(\"AES\").generateKey(), which means it is not securely random and can be easily guessed."
+    },
+    {
+      "test_name": "BenchmarkTest00128",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses a hardcoded secret key for encryption, which is a security vulnerability as it can lead to unauthorized access to the encrypted data. The key should be stored securely and not hardcoded in the source code."
+    },
+    {
+      "test_name": "BenchmarkTest00129",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses the AES encryption algorithm without proper initialization vector (IV) which could lead to vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00130",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses a hard-coded secret key for encryption, which is a security vulnerability. The secret key is generated using javax.crypto.KeyGenerator.getInstance(\"AES\").generateKey(), which means it is not securely random and can be easily guessed. This can lead to serious security issues."
+    },
+    {
+      "test_name": "BenchmarkTest00131",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 31,
+      "reason": "The code uses a switch statement with a variable as the expression. The variable is derived from a user-supplied header, which is then used to control the flow of the switch statement. This can lead to path traversal vulnerabilities if the user-supplied value is not properly constrained."
+    },
+    {
+      "test_name": "BenchmarkTest00132",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The code uses a switch statement with a user-controlled input as the selector. The input is directly used as the case label in the switch statement. This can lead to path traversal vulnerabilities if the input is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00133",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 31,
+      "reason": "The code uses a ternary operator to conditionally assign a value to the variable 'bar'. The condition '(7 * 42) - num > 200' is always false for the given values of 'num' (106). This means that the variable 'bar' will always be assigned the value of 'param', which could lead to a path traversal vulnerability if 'param' contains user-supplied input that is used to construct a file path."
+    },
+    {
+      "test_name": "BenchmarkTest00134",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The code is vulnerable to path traversal attacks. The vulnerability is caused by the use of a hardcoded file path that is not properly validated or sanitized. The attacker can manipulate the 'BenchmarkTest00134' header to read or write files outside the intended directory."
+    },
+    {
+      "test_name": "BenchmarkTest00135",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The code uses a switch statement with a user-controlled input as the selector. The input is directly used to select a case in the switch statement. This can lead to path traversal vulnerabilities if the input is not properly sanitized and controlled."
+    },
+    {
+      "test_name": "BenchmarkTest00136",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 34,
+      "reason": "The code uses a switch statement with a variable as the expression. The variable is derived from a user-supplied header, which is then used to control the flow of the switch statement. This can lead to path traversal vulnerabilities if the user-supplied input is not properly constrained."
+    },
+    {
+      "test_name": "BenchmarkTest00137",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00138",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 38,
+      "reason": "The code is vulnerable to LDAP injection attacks. The user-supplied input is directly included in an LDAP search filter without proper validation or sanitization. This can lead to unauthorized data access or manipulation."
+    },
+    {
+      "test_name": "BenchmarkTest00139",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 54,
+      "reason": "The code is using a LDAP query to search for a user with a username provided in a request header. The username is directly included in the LDAP query without any sanitization or validation. This could lead to LDAP Injection if the input is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00140",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 34,
+      "reason": "The java.lang.Math.random() function is used to generate a random number. This function is not suitable for generating cryptographically strong random numbers. It is not suitable for use in security-related applications."
+    },
+    {
+      "test_name": "BenchmarkTest00141",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 34,
+      "reason": "The code uses the SHA1 algorithm for hashing, which is considered a weak cryptographic algorithm. It is recommended to use stronger hash functions like SHA-256."
+    },
+    {
+      "test_name": "BenchmarkTest00142",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": null,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the hash algorithm used is hardcoded as 'SHA-256' which might not be secure. It is recommended to use a more secure hash algorithm or consider using a library that supports secure hash algorithms."
+    },
+    {
+      "test_name": "BenchmarkTest00143",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": null,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the hash algorithm is hardcoded to SHA512, which is a strong cryptographic hash function. This can lead to a vulnerability if an attacker can predict the output of the hash function. The attacker can then use this information to decrypt the data. This is a weakness in the Cryptographic Strength of the system."
+    },
+    {
+      "test_name": "BenchmarkTest00144",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the fact that the server is directly outputting user-supplied data (`bar`) into the response without any sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00145",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server is sending user input from the 'keyB-17589' field in the response header. This input is directly written to the response body without any sanitization or encoding. This could lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00146",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the use of the format() method of the PrintWriter class. The format() method takes a format string and a list of arguments. In this case, the format string contains a string that is subject to an attacker-controlled value (bar). This value is then inserted into the format string without any sanitization, which can lead to XSS vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00147",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server is sending user input from the Referer header directly to the client without any sanitization or encoding. This can lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00148",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is present in the line where the 'bar' variable is set. The 'param' variable is directly assigned to 'bar' without any sanitization or validation. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00149",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 34,
+      "reason": "The server response contains user input without proper sanitization. This can lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00150",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The code is vulnerable to XSS attacks because it directly inserts user-supplied data into the response without any sanitization or encoding. The user-supplied data is inserted into the 'bar' variable, which is then used in a printf-like statement. This could lead to XSS vulnerabilities if the user-supplied data contains JavaScript code."
+    },
+    {
+      "test_name": "BenchmarkTest00151",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the fact that the server is directly outputting user-supplied data (`bar`) into the response without any sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00152",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 34,
+      "reason": "The server is outputting user-supplied input directly to the response without any sanitization. This could lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00153",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server is sending user input from the 'Referer' header directly to the client without any sanitization. This could lead to a Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00154",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is due to the server not properly sanitizing user-supplied input before outputting it back to the client. The attacker can exploit this by injecting arbitrary JavaScript code into the 'Referer' header of a request."
+    },
+    {
+      "test_name": "BenchmarkTest00155",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server sends user input directly to the client without any sanitization. This can lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00156",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The server is sending user input directly to the client without any sanitization. This could lead to Cross-Site Scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00157",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 31,
+      "reason": "The code is vulnerable to XSS attacks. The value of the 'bar' variable is derived from the 'param' variable, which is obtained from the 'Referer' header of the HTTP request. The 'param' value is URL decoded, but the 'bar' value is not. This means that if the 'Referer' header contains a value that is not properly escaped, it will be included in the response, leading to a potential XSS vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00158",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the fact that the user-supplied input is directly included in the response without any sanitization. This can lead to the execution of arbitrary JavaScript code in the browser of the victim."
+    },
+    {
+      "test_name": "BenchmarkTest00159",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the fact that the application directly includes user-supplied input in an HTML context without proper sanitization. This can lead to the execution of arbitrary JavaScript code in the user's browser."
+    },
+    {
+      "test_name": "BenchmarkTest00160",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random.nextBytes() to generate a random byte array. This method does not provide any form of randomness, as it uses a deterministic seed. This can lead to vulnerabilities such as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00161",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextDouble() to generate a random double value. This method is not cryptographically strong and can be exploited for vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00162",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextGaussian() to generate a random number. This method is not suitable for cryptographic purposes and does not provide a secure source of randomness. The generated number is not truly random and can be predictable."
+    },
+    {
+      "test_name": "BenchmarkTest00163",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random.nextGaussian() to generate a random number. This method is not suitable for cryptographic purposes and does not provide a secure source of randomness. The vulnerability is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00164",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextInt() without seeding it, which could potentially lead to weak randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00165",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextInt() to generate a random number. This method does not provide cryptographically strong randomness and is vulnerable to a weak random number generator attack."
+    },
+    {
+      "test_name": "BenchmarkTest00166",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextLong() to generate a random long number. This method generates a pseudorandom, long value. The output of this method is not suitable for cryptographic use."
+    },
+    {
+      "test_name": "BenchmarkTest00167",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextLong() to generate a random long number. This method generates a pseudorandom, uniformly distributed long value between Long.MIN_VALUE and Long.MAX_VALUE. The randomness is not strong enough for cryptographic use."
+    },
+    {
+      "test_name": "BenchmarkTest00168",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.util.Random().nextLong() to generate a random long number. This method generates a pseudorandom, uniformly distributed long value between Long.MIN_VALUE and Long.MAX_VALUE. However, it does not provide any guarantee of the randomness of the generated value. This could potentially be exploited for cryptographic purposes."
+    },
+    {
+      "test_name": "BenchmarkTest00169",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": null,
+      "reason": "The 'secure' flag of the cookie is set to false. This means that the cookie can be accessed by client-side scripts, which can lead to security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00170",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not appear to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00171",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 41,
+      "reason": "The server executes a command based on user input without any sanitization. This can lead to code injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00172",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 41,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the way the application handles user input. The user input is directly written to the response without any sanitization, which allows an attacker to inject malicious scripts into the response."
+    },
+    {
+      "test_name": "BenchmarkTest00173",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 41,
+      "reason": "The code is executing a command from a user-supplied header. This can lead to OS command injection if the header is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00174",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 39,
+      "reason": "The code is executing a user-supplied command via Runtime.exec(). This can lead to command injection vulnerability if the user-supplied string is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00175",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 42,
+      "reason": "The code is executing a command from a user-supplied header. This can lead to OS command injection if the header is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00176",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the use of `response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()))`. This line of code is directly outputting the exception message to the client without any sanitization. This can lead to the execution of arbitrary JavaScript code on the client side."
+    },
+    {
+      "test_name": "BenchmarkTest00177",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 34,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the way the application handles user input. The user input is directly included in the response without any sanitization or encoding, which allows an attacker to inject malicious scripts into the response."
+    },
+    {
+      "test_name": "BenchmarkTest00178",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not seem to have any obvious security vulnerabilities based on the provided CWE references."
+    },
+    {
+      "test_name": "BenchmarkTest00179",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextDouble() to generate a random number. This method is not suitable for cryptographic purposes and does not provide strong randomness. The random number is then used to generate a 'rememberMe' cookie. This cookie is set to be secure and httpOnly, which means it can't be accessed via client-side scripts. However, the random number is visible in the URL and can be easily guessed by an attacker. This could potentially lead to a weak random number vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00180",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextDouble() to generate a random number. This method is not suitable for cryptographic purposes and does not provide a sufficient level of randomness. The random number is then used to generate a 'rememberMe' cookie, which could potentially be exploited for session hijacking attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00181",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextDouble() to generate a random number. This method is not suitable for cryptographic purposes and does not provide strong randomness. The random number is then used to generate a 'rememberMe' cookie. This cookie is set to be secure and httpOnly, which means it can't be accessed by client-side scripts. However, the random number is visible in the URL and can be easily guessed by an attacker. This could potentially lead to a weak random number vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00182",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 64,
+      "reason": "The code uses java.security.SecureRandom.nextGaussian() to generate a random number. This method is not suitable for generating cryptographically strong random numbers. The generated number is then used to create a rememberMe cookie. This cookie is set to be secure and httpOnly, which means it can't be accessed by client-side scripts. However, the vulnerability is that the rememberMeKey is derived from a random number and is not properly checked for integrity. This could allow an attacker to impersonate a user by setting their own rememberMe cookie."
+    },
+    {
+      "test_name": "BenchmarkTest00183",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextGaussian() to generate a random number. This method is not suitable for cryptographic purposes and does not provide a secure source of randomness. The weakness is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00184",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextInt(int) to generate a random number. This method is not deterministic and does not provide a predictable sequence of numbers. This is a weakness in the randomness of the numbers generated."
+    },
+    {
+      "test_name": "BenchmarkTest00185",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextInt(int) to generate a random number. The random number is not used for anything else than to set a cookie value. This could potentially be a weak random number generator."
+    },
+    {
+      "test_name": "BenchmarkTest00186",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 61,
+      "reason": "The SecureRandom.nextInt(int) method is used to generate a random number. The generated number is not checked for any specific range or distribution. This could potentially lead to weak randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00187",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextInt() to generate a random number. This method is not suitable for cryptographic use and does not provide strong randomness. The weakness is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00188",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": null,
+      "reason": "The code uses java.security.SecureRandom.nextLong() to generate a random long number. This method is considered weak because it uses a SHA1PRNG algorithm, which is not a strong random number generator. It is recommended to use a strong random number generator like SecureRandom.getInstance(\"SHA256PRNG\") or SecureRandom.getInstance(\"NativePRNG\")."
+    },
+    {
+      "test_name": "BenchmarkTest00189",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 41,
+      "reason": "The server-side input is directly written into the HTTP response without any sanitization or encoding. This could lead to cross-site scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00190",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "The code is vulnerable to SQL injection because the user-supplied input is directly included in an SQL query without any sanitization or parameterization. This can be exploited by an attacker to execute arbitrary SQL commands."
+    },
+    {
+      "test_name": "BenchmarkTest00191",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "The code is vulnerable to SQL injection because the user-supplied input is directly included in an SQL query without any sanitization or parameterization. This can be exploited by an attacker to manipulate the SQL query."
+    },
+    {
+      "test_name": "BenchmarkTest00192",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "The code is vulnerable to SQL injection because the application uses a PreparedStatement without parameter binding. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00193",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because the application uses a PreparedStatement without parameter binding. The user-supplied input is directly included in the SQL query, making it susceptible to SQL injection attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00194",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because the input from the request header is directly included in a SQL query without any sanitization or parameterization. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00195",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "The code is vulnerable to SQL injection because the input from the request header is directly included in a SQL query without any sanitization or parameterization. The input from the request header is used in the SQL query without any sanitization or parameterization."
+    },
+    {
+      "test_name": "BenchmarkTest00196",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 32,
+      "reason": "SQL Injection vulnerability in the code. The SQL query is constructed using user input without proper sanitization. This can lead to SQL injection attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00197",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 42,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. The input from the header 'BenchmarkTest00197' is directly used in the SQL query without any sanitization or parameterization."
+    },
+    {
+      "test_name": "BenchmarkTest00198",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00199",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. The input from the header 'BenchmarkTest00199' is directly used in the SQL query without any sanitization or parameterization."
+    },
+    {
+      "test_name": "BenchmarkTest00200",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": null,
+      "reason": "The code is vulnerable to SQL injection because the input from the request header is directly included in a SQL query without any sanitization or parameterization. This can lead to SQL injection vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00201",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 39,
+      "reason": "SQL Injection vulnerability exists due to the use of string concatenation to build the SQL query. The value of the 'bar' variable is directly included in the SQL query without any sanitization or parameterization."
+    },
+    {
+      "test_name": "BenchmarkTest00202",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 41,
+      "reason": "The code is vulnerable to SQL injection because it directly includes user-supplied input in an SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00203",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because the user-supplied input is directly included in an SQL query without proper sanitization or parameterization. This can be exploited by an attacker to execute arbitrary SQL commands."
+    },
+    {
+      "test_name": "BenchmarkTest00204",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 31,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly included in a SQL query without any sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00205",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 34,
+      "reason": "The code is vulnerable to SQL injection because it directly includes user-supplied input in an SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00206",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 44,
+      "reason": "The code is vulnerable to SQL injection because it directly includes user-supplied input in an SQL query without proper sanitization or parameterization. This can be mitigated by using prepared statements or parameterized queries."
+    },
+    {
+      "test_name": "BenchmarkTest00207",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 41,
+      "reason": "The code is vulnerable to SQL injection because the input from the HTTP header is directly included in an XPath expression without any sanitization or validation. This can lead to SQL injection if the input is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00208",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any key management or initialization vector (IV) management. DES is a weak encryption standard and should not be used for any sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00209",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses the javax.crypto.Cipher class for encryption, but no specific cipher algorithm is specified. This could potentially lead to weak encryption."
+    },
+    {
+      "test_name": "BenchmarkTest00210",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": null,
+      "reason": "The code uses DES encryption without any key management practices. DES is a weak encryption standard and should not be used for new applications. The key is generated using java.security.SecureRandom.generateSeed(int numBytes) which generates a pseudorandom seed of the specified length. This is not a secure practice."
+    }
+  ],
+  "scenario_id": "tot-none",
+  "model": "deepseek-coder:6.7b",
+  "think": false,
+  "sast": "none",
+  "dataset_sha256": "dc4dbfe4f54772afe441369580278780f6de1fcd306f18118583754dc2e404d5",
+  "cwe_mapping_context": "CWE REFERENCE FOR CLASSIFICATION (use this only after independently analyzing the code):\nThe category labels below are OWASP Benchmark category names; CWE IDs are canonical identifiers.\nDo not assume a sample's category from its sample ID. Do not claim a vulnerability solely because a category is listed.\n- cmdi -> CWE-78\n- crypto -> CWE-327\n- hash -> CWE-328\n- ldapi -> CWE-90\n- pathtraver -> CWE-22\n- securecookie -> CWE-614\n- sqli -> CWE-89\n- trustbound -> CWE-501\n- weakrand -> CWE-330\n- xpathi -> CWE-643\n- xss -> CWE-79\n\nIf vulnerable=false, set cwe to an empty string. If vulnerable=true, choose the best-supported CWE ID from the code; do not copy any per-sample ground-truth label.",
+  "generated_at_utc": "2026-10-31T00:35:30.347142+00:00",
+  "elapsed_seconds": 10863.837,
+  "log_file": "/workspace/sast-llm-benchmark/results/llm/raw/deepseek-coder-6.7b__tot-none__think-false__dc4dbfe4f547.jsonl"
+}
