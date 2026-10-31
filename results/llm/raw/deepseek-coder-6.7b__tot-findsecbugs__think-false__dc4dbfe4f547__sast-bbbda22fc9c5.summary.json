@@ -1,0 +1,1617 @@
+{
+  "dataset_records": 2740,
+  "predictions_valid": 226,
+  "vulnerable_detected_by_model": 225,
+  "classified_not_vulnerable_by_model": 1,
+  "vulnerable_predictions_with_cwe": 225,
+  "cwe_distribution": {
+    "22": 27,
+    "328": 17,
+    "614": 11,
+    "327": 30,
+    "78": 18,
+    "89": 47,
+    "330": 39,
+    "90": 5,
+    "79": 27,
+    "501": 2,
+    "643": 2
+  },
+  "missing_predictions": 0,
+  "invalid_responses": 3,
+  "failed_calls": 2511,
+  "missing_sample_ids": [],
+  "predictions": [
+    {
+      "test_name": "BenchmarkTest00001",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 62,
+      "reason": "The code reads a file whose location is specified by user input. This can lead to a Path Traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00002",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 62,
+      "reason": "The code uses FileOutputStream to write to a file whose location is specified by user input. This can lead to Path Traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00003",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 50,
+      "reason": "Potentially sensitive data in a cookie"
+    },
+    {
+      "test_name": "BenchmarkTest00004",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 51,
+      "reason": "The application uses a secure cookie but the cookie is vulnerable to information leakage."
+    },
+    {
+      "test_name": "BenchmarkTest00005",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 65,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00006",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 64,
+      "reason": "The code uses the ProcessBuilder.command() method with a user-supplied input. This input is directly passed to the command without any sanitization or validation, leading to a potential Command Injection vulnerability. The FindSecBugs rule COMMAND_INJECTION indicates this potential vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00007",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 51,
+      "reason": "The code is vulnerable to command injection as indicated by FindSecBugs. The issue is with the use of Runtime.exec(...) method where the user-supplied header value is directly passed as a command to execute. This can lead to arbitrary command execution."
+    },
+    {
+      "test_name": "BenchmarkTest00008",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 58,
+      "reason": "SQL_INJECTION_JDBC - Potential JDBC Injection This use of Connection.prepareCall(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00009",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 90,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00010",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 79,
+      "reason": "The application uses java.security.SecureRandom.nextInt(int) to generate a random number. The random number is used as a key for a cookie. The vulnerability is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00011",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 53,
+      "reason": "The code reads a file whose location might be specified by user input. The vulnerability is caused by the fact that the file path is not properly sanitized, leading to a Path Traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00012",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 62,
+      "reason": "The use of InitialDirContext.search(...) can be vulnerable to LDAP injection. The filter string is constructed with user input without proper sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00013",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 53,
+      "reason": "The code uses PrintWriter.format() with a format string that is user-controlled. This could lead to cross-site scripting (XSS) vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00014",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 53,
+      "reason": "The use of PrintWriter.format(...) could be vulnerable to XSS. The method PrintWriter.format(...) is called at line 53, which is vulnerable to XSS."
+    },
+    {
+      "test_name": "BenchmarkTest00015",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 66,
+      "reason": "The code uses ProcessBuilder.command(...) to execute a command. The input from the request header is directly passed to this method without any sanitization or validation. This could lead to command injection vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00016",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 70,
+      "reason": "The cookie 'SomeCookie' is set with the HttpOnly flag but without the Secure flag. This means that the cookie can be accessed by client-side scripts, potentially leading to security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00017",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 65,
+      "reason": "The code uses Runtime.exec() with a user-supplied string as an argument. This can lead to command injection vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00018",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 56,
+      "reason": "The SQL statement is constructed using a variable that is directly inserted into the SQL query string. This could lead to SQL injection vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00019",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 55,
+      "reason": "The cryptographic algorithm 'DESede/ECB/PKCS5Padding' is used, which is insecure. It should be replaced with a more secure algorithm."
+    },
+    {
+      "test_name": "BenchmarkTest00020",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 60,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00021",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 56,
+      "reason": "Potential LDAP Injection"
+    },
+    {
+      "test_name": "BenchmarkTest00022",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 68,
+      "reason": "The method getParameter returns a String value that is controlled by the client. This value is used in the File method, which could lead to a Path Traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00023",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 49,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00024",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 49,
+      "reason": "SQL Injection via PreparedStatement"
+    },
+    {
+      "test_name": "BenchmarkTest00025",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 52,
+      "reason": "The code is vulnerable to SQL injection as the user input is directly used in a SQL query without proper sanitization or parameterization."
+    },
+    {
+      "test_name": "BenchmarkTest00026",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 52,
+      "reason": "The code is vulnerable to SQL injection as the user input is directly used in a SQL query without any sanitization or parameterized query."
+    },
+    {
+      "test_name": "BenchmarkTest00027",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 45,
+      "reason": "The method getParameter returns a String value that is controlled by the client. This can lead to SQL Injection."
+    },
+    {
+      "test_name": "BenchmarkTest00028",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 58,
+      "reason": "The code is vulnerable to a path traversal attack. The FileOutputStream is created with a filename that is controlled by user input. This can lead to writing to any file on the system, potentially leading to data loss or server compromise."
+    },
+    {
+      "test_name": "BenchmarkTest00029",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 76,
+      "reason": "The method getParameterMap returns a String value that is controlled by the client. This value is used in the File(...) method, which can lead to a Path Traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00030",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 45,
+      "reason": "The method getParameterMap returns a String value that is controlled by the client. This could potentially lead to XSS vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00031",
+      "vulnerable": true,
+      "cwe": "501",
+      "line": 48,
+      "reason": "Trust Boundary Violation The application mixes trusted and untrusted data in session attributes."
+    },
+    {
+      "test_name": "BenchmarkTest00032",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 55,
+      "reason": "The code is vulnerable to SQL injection because the JdbcTemplate.execute(...) method is used to execute SQL queries. The method does not properly sanitize user input, which allows an attacker to manipulate the SQL query."
+    },
+    {
+      "test_name": "BenchmarkTest00033",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 55,
+      "reason": "SQL injection vulnerability due to unchecked user input"
+    },
+    {
+      "test_name": "BenchmarkTest00034",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 58,
+      "reason": "SQL injection vulnerability due to unchecked user input"
+    },
+    {
+      "test_name": "BenchmarkTest00035",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 70,
+      "reason": "DES/DESede is insecure. It should be replaced with AES."
+    },
+    {
+      "test_name": "BenchmarkTest00036",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 66,
+      "reason": "The use of PrintWriter.write(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00037",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 67,
+      "reason": "SQL Injection via Prepared Statement"
+    },
+    {
+      "test_name": "BenchmarkTest00038",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 64,
+      "reason": "SQL Injection (Spring JDBC) vulnerability is present. The use of JdbcTemplate.query(...) can be vulnerable to SQL injection."
+    },
+    {
+      "test_name": "BenchmarkTest00039",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 64,
+      "reason": "SQL injection vulnerability due to unchecked user input in the SQL query"
+    },
+    {
+      "test_name": "BenchmarkTest00040",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 46,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input. At BenchmarkTest00040.java:[lines 30-61] In class org.owasp.benchmark.testcode.BenchmarkTest00040 In method org.owasp.benchmark.testcode.BenchmarkTest00040.doPost(HttpServletRequest, HttpServletResponse) At BenchmarkTest00040.java:[line 50] Sink method File(...) At SeparateClassRequest.java:[line 33] At BenchmarkTest00040.java:[line 46]"
+    },
+    {
+      "test_name": "BenchmarkTest00041",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 46,
+      "reason": "Potential XSS in Servlet. The use of PrintWriter.write(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00042",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 66,
+      "reason": "The SecureRandom.nextInt() method is used to generate a random number. This number is then stored in a cookie. The cookie is marked as HttpOnly, which means it cannot be accessed by JavaScript, which could prevent it from being accessed by malicious scripts. However, the vulnerability is still present because the random number is used to generate the rememberMeKey, which is then stored in the cookie. This could potentially be exploited by an attacker to impersonate a user."
+    },
+    {
+      "test_name": "BenchmarkTest00043",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 54,
+      "reason": "The code is vulnerable to SQL injection because the user input is directly inserted into an SQL query without any sanitization or parameterized query. This can be exploited by an attacker to execute arbitrary SQL commands."
+    },
+    {
+      "test_name": "BenchmarkTest00044",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 59,
+      "reason": "Potential LDAP Injection"
+    },
+    {
+      "test_name": "BenchmarkTest00045",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 62,
+      "reason": "The method getParameterValues returns a String value that is controlled by the client. This value is directly used in a FileInputStream call, leading to a potential path traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00047",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 60,
+      "reason": "The use of PrintWriter.format(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00048",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 63,
+      "reason": "The use of PrintWriter.print(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00049",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 63,
+      "reason": "The use of PrintWriter.write(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00050",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 60,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00051",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": null,
+      "reason": "The code is vulnerable to cross-site scripting (XSS) attacks. The vulnerability is caused by the fact that the code directly takes user input and includes it in a command to be executed by the operating system. This can lead to the execution of arbitrary commands, which can be exploited to run malicious scripts. The vulnerability is classified as CWE-79."
+    },
+    {
+      "test_name": "BenchmarkTest00052",
+      "vulnerable": false,
+      "cwe": "",
+      "line": null,
+      "reason": "The code does not appear to have any SQL injection vulnerabilities as indicated by the FindSecBugs findings. The code uses prepared statements to execute SQL queries, which helps to prevent SQL injection attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00053",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 76,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00054",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 72,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00055",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 70,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00056",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 80,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00057",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 76,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00058",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 63,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity. At BenchmarkTest00058.java:[lines 30-131] In class org.owasp.benchmark.testcode.BenchmarkTest00058 In method org.owasp.benchmark.testcode.BenchmarkTest00058.doPost(HttpServletRequest, HttpServletResponse) At BenchmarkTest00058.java:[line 63]"
+    },
+    {
+      "test_name": "BenchmarkTest00059",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 77,
+      "reason": "DES/DESede is insecure DES/DESede should be replaced with AES"
+    },
+    {
+      "test_name": "BenchmarkTest00060",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 63,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00061",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 58,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00062",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 68,
+      "reason": "The code reads a file from a location specified by a user input. This can lead to Path Traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00063",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 69,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00064",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 69,
+      "reason": "The code uses a FileOutputStream to write to a file whose location is specified by user input. This can lead to a Path Traversal vulnerability if the user input is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00065",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 48,
+      "reason": "The application stores sensitive data in a cookie. The cookie is set to be secure and httpOnly, but it is not encrypted. This could potentially lead to a security vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00066",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 65,
+      "reason": "The use of java.lang.Math.random() is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00067",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 73,
+      "reason": "The use of java.lang.Math.random() is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00068",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 65,
+      "reason": "The use of java.lang.Math.random() is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00069",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 92,
+      "reason": "The code uses the MessageDigest class with the SHA-384 algorithm, which is vulnerable to a path traversal attack. The input to the digest function is derived from user-supplied input, which could potentially lead to a file read sink."
+    },
+    {
+      "test_name": "BenchmarkTest00070",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 66,
+      "reason": "SHA-1 is not a recommended cryptographic hash function"
+    },
+    {
+      "test_name": "BenchmarkTest00071",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 66,
+      "reason": "SHA-1 is not a recommended cryptographic hash function"
+    },
+    {
+      "test_name": "BenchmarkTest00072",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 79,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. The hash is written to a file. The input to the hash function is derived from a user-supplied value, which is read from a cookie. The FindSecBugs report indicates that the sensitive data in the cookie may be exploited for security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00073",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 79,
+      "reason": "The code uses MD5 for hashing, which is a weak hash function. The FindSecBugs rule WEAK_MESSAGE_DIGEST_MD5 indicates this."
+    },
+    {
+      "test_name": "BenchmarkTest00074",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 86,
+      "reason": "The code uses the java.security.MessageDigest class to hash user input. However, the input is not properly sanitized before being hashed, leading to potential security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00075",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 87,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the input to the hash function is derived from a user-supplied value (`bar`) which is read from an HTTP request. This value is derived from a cookie, which is susceptible to being tampered with. The FindSecBugs rule COOKIE_USAGE indicates that this cookie may contain sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00076",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 100,
+      "reason": "The code uses the java.security.MessageDigest class to hash data. However, the input to the hash function is derived from an untrusted source (user input), potentially leading to a potential path traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00077",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 88,
+      "reason": "Command Injection vulnerability is present at line 88. The usage of ProcessBuilder(...) can be vulnerable to Command Injection."
+    },
+    {
+      "test_name": "BenchmarkTest00078",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 63,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00079",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 64,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00080",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 59,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00081",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 59,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00082",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 60,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00083",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 65,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00084",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 60,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00085",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 64,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00086",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 65,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00087",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 77,
+      "reason": "The 'secure' flag is not set for the cookie. This means that the cookie will be sent in clear text and could be intercepted by a malicious script in the browser."
+    },
+    {
+      "test_name": "BenchmarkTest00088",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 73,
+      "reason": "The 'HttpOnly' flag is not set for the cookie. This means that the cookie can be accessed by client-side scripts, potentially leading to security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00089",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 79,
+      "reason": "The 'HttpOnly' flag is not set for the cookie. This means that the cookie can be accessed by client-side scripts, potentially leading to security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00090",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 74,
+      "reason": "The usage of Runtime.exec(...) can be vulnerable to Command Injection. The command being executed is user-supplied and is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00091",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 49,
+      "reason": "The code uses Runtime.exec() with user-supplied input, which can lead to command injection. The FindSecBugs rule COMMAND_INJECTION indicates this potential vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00092",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 49,
+      "reason": "Command Injection vulnerability is present at line 49. The usage of Runtime.exec(...) can be vulnerable to Command Injection."
+    },
+    {
+      "test_name": "BenchmarkTest00093",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 79,
+      "reason": "Command Injection vulnerability is present at line 79. The usage of Runtime.exec(...) can be vulnerable to Command Injection."
+    },
+    {
+      "test_name": "BenchmarkTest00094",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 105,
+      "reason": "The code uses java.security.SecureRandom.nextDouble() to generate a random number. This method is not suitable for generating cryptographically strong random numbers. The FindSecBugs rule COOKIE_USAGE indicates that potentially sensitive data is being stored in a cookie."
+    },
+    {
+      "test_name": "BenchmarkTest00095",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 48,
+      "reason": "The SecureRandom.nextGaussian() method is used to generate a random number. This method is not seeded and does not provide any form of randomness. This could potentially be exploited for cryptographic purposes."
+    },
+    {
+      "test_name": "BenchmarkTest00096",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 48,
+      "reason": "The SecureRandom instance is created using the SHA1PRNG algorithm, which is weak and not suitable for cryptographic use. This is used to generate a random number which is then used to create a rememberMeKey."
+    },
+    {
+      "test_name": "BenchmarkTest00097",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 49,
+      "reason": "The application uses a secure cookie but the cookie is vulnerable to misuse. The cookie is set to be secure and httpOnly, but it is not encrypted. This could potentially be exploited by an attacker to steal the cookie."
+    },
+    {
+      "test_name": "BenchmarkTest00098",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 48,
+      "reason": "The application sets a secure cookie with the 'Secure' flag but does not set the 'HttpOnly' flag. This can lead to potential security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00099",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 48,
+      "reason": "The application stores sensitive data in a cookie. This can lead to security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00100",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 64,
+      "reason": "Potential JDBC Injection This use of Connection.prepareStatement(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00101",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 69,
+      "reason": "SQL_INJECTION_JDBC and SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING FindSecBugs findings indicate potential SQL injection vulnerability. The SQL statement is constructed using a variable 'bar' which is not properly sanitized. This could lead to SQL injection attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00102",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 61,
+      "reason": "Potential JDBC Injection (Spring JDBC) This use of JdbcTemplate.queryForMap(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00103",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 66,
+      "reason": "Potential JDBC Injection (Spring JDBC) This use of JdbcTemplate.queryForObject(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00104",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 66,
+      "reason": "Potential JDBC Injection (Spring JDBC) This use of JdbcTemplate.batchUpdate(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00105",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 65,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE"
+    },
+    {
+      "test_name": "BenchmarkTest00106",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 69,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE"
+    },
+    {
+      "test_name": "BenchmarkTest00107",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 73,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE"
+    },
+    {
+      "test_name": "BenchmarkTest00108",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 82,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE findings"
+    },
+    {
+      "test_name": "BenchmarkTest00109",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 67,
+      "reason": "SQL injection vulnerability due to non-constant string passed to execute method"
+    },
+    {
+      "test_name": "BenchmarkTest00110",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 73,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE"
+    },
+    {
+      "test_name": "BenchmarkTest00111",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 69,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE findings"
+    },
+    {
+      "test_name": "BenchmarkTest00112",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 64,
+      "reason": "SQL injection vulnerability due to the use of Statement.executeUpdate(...) with a non-constant string"
+    },
+    {
+      "test_name": "BenchmarkTest00113",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 65,
+      "reason": "SQL_INJECTION_JDBC: Potential JDBC Injection This use of Statement.executeUpdate(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00114",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 65,
+      "reason": "Potential JDBC Injection This use of Statement.executeUpdate(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00115",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 64,
+      "reason": "SQL_INJECTION_JDBC: Potential JDBC Injection This use of Statement.executeUpdate(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00116",
+      "vulnerable": true,
+      "cwe": "643",
+      "line": 81,
+      "reason": "The code uses XPath.compile(...) which can be vulnerable to XPath Injection. The input from the user is directly used in the XPath expression without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00117",
+      "vulnerable": true,
+      "cwe": "643",
+      "line": 81,
+      "reason": "The code uses XPath.compile(...) which can be vulnerable to XPath Injection. The input to XPath.compile(...) is directly concatenated with a string without any sanitization or validation, which could lead to arbitrary code execution."
+    },
+    {
+      "test_name": "BenchmarkTest00118",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 81,
+      "reason": "Potential XSS in Servlet"
+    },
+    {
+      "test_name": "BenchmarkTest00119",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 79,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00120",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 70,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00121",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 78,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00122",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 68,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00123",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 66,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00124",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 72,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity. The cipher is susceptible to padding oracle attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00125",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 66,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00126",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 69,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity."
+    },
+    {
+      "test_name": "BenchmarkTest00127",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 82,
+      "reason": "The code uses DES/DESede, which is insecure. It should use AES instead."
+    },
+    {
+      "test_name": "BenchmarkTest00128",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 78,
+      "reason": "DES/DESede is insecure. It should be replaced with AES."
+    },
+    {
+      "test_name": "BenchmarkTest00129",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 72,
+      "reason": "DES/DESede is insecure. DES/DESede should be replaced with AES"
+    },
+    {
+      "test_name": "BenchmarkTest00130",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 91,
+      "reason": "The code uses DES/DESede encryption algorithm which is insecure. It should use AES instead."
+    },
+    {
+      "test_name": "BenchmarkTest00131",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 49,
+      "reason": "The code contains a potential path traversal vulnerability. The switch statement uses a user-supplied header value to determine the path to a file. If the user-supplied value is 'B', it could lead to reading a file whose location is not restricted."
+    },
+    {
+      "test_name": "BenchmarkTest00132",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 78,
+      "reason": "The code reads a file from a location specified by a user-supplied header. This can lead to path traversal vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00133",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 65,
+      "reason": "The code reads a file from a location specified by a user-supplied header. This can lead to path traversal vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00134",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 75,
+      "reason": "The code uses a FileInputStream to read from a file specified by user input. This can lead to a Path Traversal vulnerability if the user input is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00135",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 84,
+      "reason": "The code reads a file from a location specified by a user-supplied header. This can lead to path traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00136",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 78,
+      "reason": "The code writes to a file whose location is specified by user input. This can lead to path traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00137",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 44,
+      "reason": "The HTTP headers untrusted Request header can easily be altered by the client. This can lead to Cross-Site Scripting (XSS) vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00138",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 67,
+      "reason": "Potential LDAP Injection"
+    },
+    {
+      "test_name": "BenchmarkTest00139",
+      "vulnerable": true,
+      "cwe": "90",
+      "line": 81,
+      "reason": "Potential LDAP Injection. The use of InitialDirContext.search(...) can be vulnerable to LDAP injection. The filter used in the LDAP query is user-supplied and can be manipulated to perform LDAP injection attacks."
+    },
+    {
+      "test_name": "BenchmarkTest00140",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 65,
+      "reason": "The use of java.lang.Math.random() is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00142",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 80,
+      "reason": "The code uses java.security.MessageDigest.getInstance(java.lang.String) to create a MessageDigest instance. The input to this method is derived from an HTTP request header. This could potentially allow an attacker to specify a different MessageDigest algorithm, potentially leading to a security vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00143",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 96,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input. At BenchmarkTest00143.java:[lines 30-113] In class org.owasp.benchmark.testcode.BenchmarkTest00143 In method org.owasp.benchmark.testcode.BenchmarkTest00143.doPost(HttpServletRequest, HttpServletResponse) At BenchmarkTest00143.java:[line 96] Sink method File(...)"
+    },
+    {
+      "test_name": "BenchmarkTest00144",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 61,
+      "reason": "The use of PrintWriter.format(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00145",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 57,
+      "reason": "The use of PrintWriter.format(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00146",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 55,
+      "reason": "The use of PrintWriter.format(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00147",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 61,
+      "reason": "The use of PrintWriter.format(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00148",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 49,
+      "reason": "The use of PrintWriter.format(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00149",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 53,
+      "reason": "The use of PrintWriter.printf(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00150",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 49,
+      "reason": "The use of PrintWriter.printf(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00151",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 61,
+      "reason": "The use of PrintWriter.printf(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00152",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 74,
+      "reason": "The use of PrintWriter.println(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00153",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 57,
+      "reason": "The use of PrintWriter.println(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00154",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 49,
+      "reason": "The use of PrintWriter.println(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00155",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 56,
+      "reason": "The use of PrintWriter.println(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00156",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 65,
+      "reason": "The use of PrintWriter.write(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00157",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 49,
+      "reason": "The use of PrintWriter.write(...) could be vulnerable to XSS"
+    },
+    {
+      "test_name": "BenchmarkTest00158",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 71,
+      "reason": "The code uses ProcessBuilder to execute a command based on a user-supplied header. This can lead to command injection if the user-supplied header is not properly sanitized."
+    },
+    {
+      "test_name": "BenchmarkTest00159",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 66,
+      "reason": "The code uses the ProcessBuilder class to execute a command. The command is built from untrusted input, which can lead to command injection vulnerability. The FindSecBugs rule COMMAND_INJECTION is applicable here."
+    },
+    {
+      "test_name": "BenchmarkTest00160",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 60,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00161",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 61,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00162",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 55,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00163",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 56,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00164",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 61,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00165",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 58,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00166",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 55,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00167",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 59,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00168",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 61,
+      "reason": "The use of java.util.Random is predictable"
+    },
+    {
+      "test_name": "BenchmarkTest00169",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 79,
+      "reason": "Cookie without the secure flag Cookie without the secure flag could be sent in clear text if a HTTP URL is visited"
+    },
+    {
+      "test_name": "BenchmarkTest00170",
+      "vulnerable": true,
+      "cwe": "614",
+      "line": 83,
+      "reason": "The 'secure' flag of the cookie is not set, which means the cookie can be accessed by client-side scripts. This can lead to information disclosure if the cookie contains sensitive data."
+    },
+    {
+      "test_name": "BenchmarkTest00171",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 58,
+      "reason": "Command Injection vulnerability is present at line 58 where the user-supplied input is directly passed to the Runtime.exec() method without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00172",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 57,
+      "reason": "The code uses Runtime.exec() with user-supplied input as a command, which can lead to command injection. The user-supplied input is directly passed to Runtime.exec() without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00173",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 57,
+      "reason": "The code uses Runtime.exec() with a user-supplied string as a command, which can lead to command injection vulnerability. The user-supplied string is directly passed to Runtime.exec() without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00174",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 53,
+      "reason": "The code uses Runtime.exec() with a user-supplied string as a command, which can lead to command injection. The user-supplied string is directly passed to Runtime.exec() without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00175",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 58,
+      "reason": "The code uses Runtime.exec() with a user-supplied string as a command, which can lead to command injection. The user-supplied string is directly passed to Runtime.exec() without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00176",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 65,
+      "reason": "The code is vulnerable to command injection as indicated by FindSecBugs findings. The usage of Runtime.exec(...) at line 65 can be vulnerable to Command Injection."
+    },
+    {
+      "test_name": "BenchmarkTest00177",
+      "vulnerable": true,
+      "cwe": "78",
+      "line": 71,
+      "reason": "The code uses Runtime.exec() with a user-supplied input, which can lead to command injection. The user-supplied input is directly passed to Runtime.exec() without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00178",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 44,
+      "reason": "The SERVLET_HEADER FindSecBugs rule is triggered. The application is accepting a request header that can be easily altered by the client. This could potentially lead to security vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00179",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 72,
+      "reason": "The SecureRandom instance is used to generate a random number. The random number is then used to create a cookie. This could potentially be exploited for weak randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00180",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 79,
+      "reason": "The code uses java.security.SecureRandom.getInstance(\"SHA1PRNG\") to generate a random number. This is a weak random number generator as it uses SHA1PRNG, which is not a secure random number generator."
+    },
+    {
+      "test_name": "BenchmarkTest00181",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 72,
+      "reason": "The SecureRandom instance is used to generate a random number. This number is then used to create a rememberMe cookie. This could potentially be weak randomness."
+    },
+    {
+      "test_name": "BenchmarkTest00182",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 85,
+      "reason": "The SecureRandom class is used to generate random numbers. The use of the nextGaussian() method does not provide cryptographically strong randomness. This could potentially be exploited for cryptographic purposes."
+    },
+    {
+      "test_name": "BenchmarkTest00183",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 90,
+      "reason": "The SecureRandom class is used to generate a random number. The use of the nextGaussian() method does not provide a secure source of randomness. This could potentially be exploited for cryptographic purposes."
+    },
+    {
+      "test_name": "BenchmarkTest00184",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 76,
+      "reason": "The application uses java.security.SecureRandom.nextInt(int) to generate a random number. This method is not suitable for cryptographic use and does not provide a cryptographically strong random number."
+    },
+    {
+      "test_name": "BenchmarkTest00185",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 77,
+      "reason": "The application uses java.security.SecureRandom.nextInt(int) to generate a random number. The random number is used as a key for a cookie. The random number is generated without any seed, which means it is generated from a cryptographically strong random source. This is considered a weak random number generation."
+    },
+    {
+      "test_name": "BenchmarkTest00186",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 85,
+      "reason": "The SecureRandom class is used to generate a random number. The use of a weak random number generator (CWE-330) is evident in the code as the SecureRandom instance is created with the 'SHA1PRNG' algorithm."
+    },
+    {
+      "test_name": "BenchmarkTest00187",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 81,
+      "reason": "The SecureRandom class is used to generate a random number. The random number is used as a key for a cookie. The vulnerability is classified as CWE-330: Use of Insufficiently Random Values."
+    },
+    {
+      "test_name": "BenchmarkTest00188",
+      "vulnerable": true,
+      "cwe": "330",
+      "line": 77,
+      "reason": "The code uses java.security.SecureRandom.nextLong() to generate a random long value. This method is not vulnerable according to the FindSecBugs findings. However, the line number is provided as the FindSecBugs finding for COOKIE_USAGE."
+    },
+    {
+      "test_name": "BenchmarkTest00189",
+      "vulnerable": true,
+      "cwe": "501",
+      "line": 66,
+      "reason": "Trust Boundary Violation: The application mixes trusted and untrusted data in session attributes."
+    },
+    {
+      "test_name": "BenchmarkTest00190",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 65,
+      "reason": "SQL_INJECTION_JDBC - Potential JDBC Injection"
+    },
+    {
+      "test_name": "BenchmarkTest00191",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 74,
+      "reason": "The code uses java.sql.Connection.prepareCall() method which can be vulnerable to SQL injection. The SQL statement is constructed directly from an untrusted input, which can lead to SQL injection."
+    },
+    {
+      "test_name": "BenchmarkTest00192",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 74,
+      "reason": "SQL_INJECTION_JDBC and SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING"
+    },
+    {
+      "test_name": "BenchmarkTest00193",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 65,
+      "reason": "SQL Injection via Prepared Statement"
+    },
+    {
+      "test_name": "BenchmarkTest00194",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 60,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.batchUpdate(...) in the code."
+    },
+    {
+      "test_name": "BenchmarkTest00195",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 62,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.execute(...) in BenchmarkTest00195.java"
+    },
+    {
+      "test_name": "BenchmarkTest00196",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 62,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.execute(...) in BenchmarkTest00196.java"
+    },
+    {
+      "test_name": "BenchmarkTest00197",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 66,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.query(...) in BenchmarkTest00197.java"
+    },
+    {
+      "test_name": "BenchmarkTest00198",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 57,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.queryForInt(...) method"
+    },
+    {
+      "test_name": "BenchmarkTest00199",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 62,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.queryForInt(...) in BenchmarkTest00199.java"
+    },
+    {
+      "test_name": "BenchmarkTest00200",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 66,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.batchUpdate(...) in BenchmarkTest00200.java"
+    },
+    {
+      "test_name": "BenchmarkTest00201",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 73,
+      "reason": "SQL injection vulnerability due to the use of JdbcTemplate.batchUpdate(...) in BenchmarkTest00201.java"
+    },
+    {
+      "test_name": "BenchmarkTest00202",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 69,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE"
+    },
+    {
+      "test_name": "BenchmarkTest00203",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 65,
+      "reason": "SQL injection vulnerability due to the use of Statement.executeUpdate(...) with a non-constant string"
+    },
+    {
+      "test_name": "BenchmarkTest00204",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 60,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE findings"
+    },
+    {
+      "test_name": "BenchmarkTest00205",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 65,
+      "reason": "SQL_INJECTION_JDBC: Potential JDBC Injection This use of Statement.executeUpdate(...) can be vulnerable to SQL injection"
+    },
+    {
+      "test_name": "BenchmarkTest00206",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 69,
+      "reason": "SQL_INJECTION_JDBC and SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE"
+    },
+    {
+      "test_name": "BenchmarkTest00207",
+      "vulnerable": true,
+      "cwe": "89",
+      "line": 73,
+      "reason": "The code uses XPath.evaluate(...) which can be vulnerable to XPath Injection. The input from the request header is directly used in the XPath expression without any sanitization or validation."
+    },
+    {
+      "test_name": "BenchmarkTest00208",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 81,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00209",
+      "vulnerable": true,
+      "cwe": "79",
+      "line": 93,
+      "reason": "Potential XSS (Cross Site Scripting) vulnerability exists due to the use of unvalidated user input in the response. The user input is written directly to the response without any encoding or sanitization, which can lead to the execution of arbitrary JavaScript code."
+    },
+    {
+      "test_name": "BenchmarkTest00210",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 78,
+      "reason": "The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00211",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 78,
+      "reason": "Cipher with no integrity. The cipher does not provide data integrity. At BenchmarkTest00211.java:[lines 30-146] In class org.owasp.benchmark.testcode.BenchmarkTest00211 In method org.owasp.benchmark.testcode.BenchmarkTest00211.doPost(HttpServletRequest, HttpServletResponse) At BenchmarkTest00211.java:[line 78]"
+    },
+    {
+      "test_name": "BenchmarkTest00212",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 74,
+      "reason": "Cipher with no integrity The cipher does not provide data integrity"
+    },
+    {
+      "test_name": "BenchmarkTest00213",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 91,
+      "reason": "DES/DESede is insecure DES/DESede should be replaced with AES"
+    },
+    {
+      "test_name": "BenchmarkTest00214",
+      "vulnerable": true,
+      "cwe": "327",
+      "line": 81,
+      "reason": "The code uses DES/DESede, which is insecure. It should use AES instead."
+    },
+    {
+      "test_name": "BenchmarkTest00215",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 64,
+      "reason": "The code reads a file whose location is specified by user input. This can lead to path traversal vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00216",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 46,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input. The user input is not properly sanitized before being used in the File.exists() method."
+    },
+    {
+      "test_name": "BenchmarkTest00217",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 75,
+      "reason": "Potential Path Traversal vulnerability exists due to the use of File(...) method which reads a file whose location might be specified by user input. The user input is not properly validated and sanitized, leading to potential path traversal vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00218",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 93,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00219",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 74,
+      "reason": "The code reads a file whose location might be specified by user input. The FindSecBugs rule indicates a potential Path Traversal vulnerability."
+    },
+    {
+      "test_name": "BenchmarkTest00220",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 82,
+      "reason": "Potential Path Traversal (file write) FileOutputStream(...) writes to a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00221",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 74,
+      "reason": "The code writes to a file whose location is specified by user input. This can lead to path traversal vulnerabilities."
+    },
+    {
+      "test_name": "BenchmarkTest00222",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 87,
+      "reason": "Potential Path Traversal (file write) FileOutputStream(...) writes to a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00224",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 91,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00225",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 89,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00226",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 92,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00227",
+      "vulnerable": true,
+      "cwe": "22",
+      "line": 100,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00228",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 96,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    },
+    {
+      "test_name": "BenchmarkTest00229",
+      "vulnerable": true,
+      "cwe": "328",
+      "line": 86,
+      "reason": "Potential Path Traversal (file read) File(...) reads a file whose location might be specified by user input"
+    }
+  ],
+  "scenario_id": "tot-findsecbugs",
+  "model": "deepseek-coder:6.7b",
+  "think": false,
+  "sast": "findsecbugs",
+  "dataset_sha256": "dc4dbfe4f54772afe441369580278780f6de1fcd306f18118583754dc2e404d5",
+  "cwe_mapping_context": "CWE REFERENCE FOR CLASSIFICATION (use this only after independently analyzing the code):\nThe category labels below are OWASP Benchmark category names; CWE IDs are canonical identifiers.\nDo not assume a sample's category from its sample ID. Do not claim a vulnerability solely because a category is listed.\n- cmdi -> CWE-78\n- crypto -> CWE-327\n- hash -> CWE-328\n- ldapi -> CWE-90\n- pathtraver -> CWE-22\n- securecookie -> CWE-614\n- sqli -> CWE-89\n- trustbound -> CWE-501\n- weakrand -> CWE-330\n- xpathi -> CWE-643\n- xss -> CWE-79\n\nIf vulnerable=false, set cwe to an empty string. If vulnerable=true, choose the best-supported CWE ID from the code; do not copy any per-sample ground-truth label.",
+  "generated_at_utc": "2026-10-31T00:30:31.160143+00:00",
+  "elapsed_seconds": 10525.361,
+  "log_file": "/workspace/sast-llm-benchmark/results/llm/raw/deepseek-coder-6.7b__tot-findsecbugs__think-false__dc4dbfe4f547__sast-bbbda22fc9c5.jsonl"
+}
